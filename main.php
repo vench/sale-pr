@@ -17,7 +17,15 @@ catch(PDOException $e)
     echo "Connection failed: " . $e->getMessage();
     }
 
+$sql = 'SELECT hash FROM sale_item';
+$sth = $conn->prepare($sql);
+$sth->execute(); 
+$old = [];
 
+foreach($sth->fetchAll() as $i) {
+	$old[$i[0]] = $i[0];
+}
+ 
 ///end mysql
 
 
@@ -51,7 +59,7 @@ for($i = 1; $i < 1000; $i ++) {
 
 $baseUrl = 'http://www.tehnosila.ru/search?q=1&p=';
 
-for($i = 1; $i < 1000; $i ++) {
+for($i = 1; $i < (int)(54768 / 30); $i ++) {
 
 //$url = 'http://www.tehnosila.ru/catalog/tv_i_video/televizory/televizory';
 	echo "{$i}\n";
@@ -78,6 +86,15 @@ if(isset( $math[1])) {
 
 				preg_match('/<div class="title">\s+<a.+href="(.*)"\s+title="(.*)"/isU', $math, $title);//title
 				if(isset($title[1]) && isset($title[2])) {
+
+
+					$hash = md5($title[1]);
+					if(isset($old[$hash])) {
+						//TODO update
+						continue;
+					}
+					
+
 					$sql = "INSERT INTO sale_item(
 							    title,
 							    price_old,
@@ -94,7 +111,7 @@ if(isset( $math[1])) {
 						':price_old'	=> intval(str_replace(' ','',$prices[1])),
 						':price_new'	=> intval(str_replace(' ','',$prices[2])),
 						':link'	=> $title[1],	
-						':hash'	=> md5($title[1])
+						':hash'	=> $hash
 					]);
 				}
 			}
