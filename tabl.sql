@@ -1,4 +1,4 @@
-CREATE TABLE `testdb`.`sale_item` (
+CREATE TABLE `sale_item` (
   `id` INT UNSIGNED auto_increment NOT NULL,
   `title` VARCHAR(255) NULL,
   `image` VARCHAR(255) NULL,
@@ -15,7 +15,7 @@ CREATE TABLE `testdb`.`sale_item` (
   DEFAULT COLLATE utf8_general_ci;
 
 
-CREATE TABLE `testdb`.`sale_tag` (
+CREATE TABLE `sale_tag` (
   `id` INT UNSIGNED auto_increment NOT NULL,
   `parent_id`  INT UNSIGNED NULL,
   `title` VARCHAR(255) NULL,
@@ -25,7 +25,7 @@ CREATE TABLE `testdb`.`sale_tag` (
   DEFAULT COLLATE utf8_general_ci;
 
 
-CREATE TABLE `testdb`.`sale_tag_item` (
+CREATE TABLE `sale_tag_item` (
   `id` INT UNSIGNED auto_increment NOT NULL,
   `tag_id`  INT UNSIGNED NULL,
   `item_id`  INT UNSIGNED NULL,

@@ -18,15 +18,19 @@ self::renderPhp('header', [
             <button type="button" class="btn btn-primary btn-xs" data-toggle="offcanvas">Toggle nav</button>
           </p>
           <div class="jumbotron">
-            <h1>Hello, world!</h1>
-            <p>This is an example to show the potential of an offcanvas layout pattern in Bootstrap. Try some responsive-range viewport sizes to see it in action.</p>
+            <h1>Добро пожаловать!</h1>
+            <p>Миссия нашего проекта найти и не упустить самую боьшую скидку в интернет магазинах. 
+Найти и вовремя воспользоватся супер выгодным предложением. У нас вы найдете реальные скидки до 50 % и выше. Единственное, сайт находятся в стадии разработки, поэтому возможны некоторые проблемы в его работу. Приносим свои извенения, если что не так.</p>
           </div>
           <div class="row">
             <?php foreach ($list as $n => $item): ?>
                 <div class="col-xs-6 col-lg-4"> 
-                    <h4><?php echo $item->getTitle(); ?></h4> 
+                    <p><?php echo $item->getTitle(); ?> <b><?php echo $item->getPriceDiff(); ?> %</b></p> 
+
+		    <p>Было <?php echo $item->getPriceOld(); ?> стало <?php echo $item->getPriceNew(); ?></p>
                     <p><img src="/img/emptyimage.jpg" alt="<?php echo $item->getTitle(); ?>"/></p>
                      <p><a class="" href="#">Просмотреть детально&raquo;</a></p>
+		    <p><a class="" href="<?php echo $item->getLink();?>">На сайт <?php echo $item->getHost();?>&raquo;</a></p>
                 </div>
               
                <?php if($n > 0 && $n % 3 == 0):?>
@@ -35,9 +39,9 @@ self::renderPhp('header', [
             <?php endforeach; ?>
           </div><!--/row-->
           
-          <p>Total: <?php echo $size; ?></p>
+          <p>Всего: <?php echo $size; ?></p>
     <?php if ($limit < $size): ?>
-    <ul>
+    <ul class="pagination">
             <?php for ($i = 0, $l = 1; $i < $size; $i+=$limit, $l++): ?>
             <li>
                 <?php if ($page == $i): ?>

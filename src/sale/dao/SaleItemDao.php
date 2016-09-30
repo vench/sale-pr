@@ -37,7 +37,7 @@ class SaleItemDao {
      */
     public function query($offset = 0, $limit = 10) {
         $conn = $this->getConnection(); 
-        $sql = 'SELECT * FROM sale_item '
+        $sql = 'SELECT * FROM sale_item ORDER BY price_diff DESC '
                 . 'LIMIT '. (int)$offset . ',' . (int)$limit; 
         $stmt = $conn->prepare($sql);
         $stmt->execute();
@@ -157,6 +157,7 @@ class SaleItemDao {
     private function fillModel(array $row) {
         $model = new \sale\model\SaleItem();
         foreach ($row as $key => $value) {
+	    $key = str_replace('_', '', $key);
             $method = 'set' . ucfirst($key);
             if(method_exists($model, $method)) {
                call_user_func_array([$model, $method], [$value]); 
