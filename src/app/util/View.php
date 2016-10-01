@@ -55,7 +55,8 @@ class View {
    public static function getHelperFunstions() {
 	return [
 
-		'priceFormat' => function($price){ return number_format($price); }
+		'priceFormat' => function($price){ return number_format($price, 0, ',', ' ') . ' р'; },
+		'dateFormat'	=> function($dateStr){ return date('d.m.Y H:i', strtotime($dateStr)); }
 	];
 
    }

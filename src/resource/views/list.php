@@ -24,7 +24,7 @@ self::renderPhp('header', [
 		<?php $n = 0;?>
             <?php foreach ($list as  $item): ?>
                 <div class="col-xs-6 col-lg-4 item list"> 
-                    <p><?php echo $item->getTitle(); ?> <b><?php echo $item->getPriceDiff(); ?> %</b></p> 
+                    <p><?php echo $item->getTitle(); ?> <b> скидка <?php echo $item->getPriceDiff(); ?> %</b> <small><?php echo $dateFormat($item->getDateInsert()); ?></small></p> 
 
 		    <p>Было <?php echo $priceFormat( $item->getPriceOld()); ?> 
 стало <?php echo $priceFormat($item->getPriceNew()); ?></p>
