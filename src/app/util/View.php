@@ -40,6 +40,7 @@ class View {
        
         ob_start();
         extract($params);
+	extract(self::getHelperFunstions());
         include_once($path);
         $s = ob_get_contents();
         ob_end_clean();
@@ -49,4 +50,13 @@ class View {
         }
         return $s; 
     }
+
+
+   public static function getHelperFunstions() {
+	return [
+
+		'priceFormat' => function($price){ return number_format($price); }
+	];
+
+   }
 }

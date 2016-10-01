@@ -57,3 +57,12 @@ footer {
     width: 50%; /* 6 columns */
   }
 }
+
+/* .item.list */
+.item.list p img {
+	width:50%; height:50%;
+}
+
+.item.list:after {
+	content:''; display:block; padding:5px 0; border-bottom:1px solid #333333;
+}

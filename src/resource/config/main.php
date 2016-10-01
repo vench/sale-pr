@@ -1,5 +1,8 @@
 <?php
 
+
+setlocale(LC_MONETARY, 'ru_RU');
+
 return [
     'defaultPage'   => 'site',
     

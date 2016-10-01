@@ -40,6 +40,16 @@ class SiteController implements ApplyAppableInterface {
             'page'  => $p,
         ]); 
     }
+
+    public function actionDetail($id) { 
+	$item = $this->dao->get( $id );
+	if(is_null($item)) {
+		return "";
+	}	
+View::renderPhp('item', [
+            'item'  => $item,
+        ]);
+     }
     
  
 
