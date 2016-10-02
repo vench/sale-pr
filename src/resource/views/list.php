@@ -14,10 +14,7 @@ self::renderPhp('header', [
  <div class="row row-offcanvas row-offcanvas-right">
 
         <div class="col-xs-12 col-sm-9">
-          <p class="pull-right visible-xs">
-            <button type="button" class="btn btn-primary btn-xs" data-toggle="offcanvas">Меню</button>
-          </p>
-
+          
 	<h1>Самые лучшие предложения интернета!</h1>
           
           <div class="row">
@@ -65,9 +62,23 @@ self::renderPhp('header', [
 
         <div class="col-xs-6 col-sm-3 sidebar-offcanvas" id="sidebar">
             <h3>Фильтры</h3>
+<form action="/" mathod="get">
           <div class="list-group">
-             
+             <ul><li>
+		 
+		<label for="f_sale_text">Содержит текст <input id="f_sale_text" name="f[text]" type="text"
+value="<?php echo $q->text; ?>" /></label>
+		</li><li>
+		 
+		<label for="f_sale_saleSize">Размер скидки от <input id="f_sale_saleSize" name="f[saleSize]" type="text" value="<?php echo $q->saleSize; ?>"/></label>
+		</li>
+
+		<button type="submit" name="s1">Применить</button>
+		</li>
+</ul>
           </div>
+
+</form>
         </div><!--/.sidebar-offcanvas-->
       </div><!--/row-->
 

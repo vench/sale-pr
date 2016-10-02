@@ -11,13 +11,14 @@ class SaleItemDao {
     
     /**
      * 
+     * @param string $type
      * @return array
      */
-    public function getHash(/* @todo */) {
+    public function getHashByType( $type ) {
         $conn = $this->getConnection(); 
-        $sql = 'SELECT id,hash FROM sale_item '; 
+        $sql = 'SELECT id,hash FROM sale_item WHERE host=:host'; 
         $stmt = $conn->prepare($sql);
-        $stmt->execute();
+        $stmt->execute([':host' => $type]);
         $rows = $stmt->fetchAll(\PDO::FETCH_ASSOC);
         $res = [];
         if(is_array($rows)) {
@@ -28,6 +29,44 @@ class SaleItemDao {
         return $res;
     }
     
+
+    public function query2(Query $q) {
+
+	$params = [];
+	$condition = '';
+
+	//TODO  ref 1
+	$conditions = [];
+
+	if(!empty($q->text)) {
+		$conditions[] = 'title like :title';
+		$params[':title'] = $q->text.'%';
+	}
+	if(!empty($q->saleSize)) {
+		$conditions[] = 'saleSize >= :saleSize';
+		$params[':saleSize'] = (int)$q->saleSize;
+	}
+
+	if(!empty($conditions)) {
+		$condition = 'WHERE '.join('AND ', $conditions).'';
+	}
+	//TODO ref 1 end
+
+ 	$conn = $this->getConnection(); 
+        $sql = 'SELECT * FROM sale_item '.$condition.' ORDER BY price_diff DESC '
+                . 'LIMIT '. (int)$q->offset . ',' . (int)$q->limit;   
+        $stmt = $conn->prepare($sql);
+        $stmt->execute($params);
+        $rows = $stmt->fetchAll(\PDO::FETCH_ASSOC);
+        if(is_array($rows)) {
+            $self = $this;
+            return array_map(function($row) use(&$self){
+                return $self->fillModel($row);
+            }, $rows);  
+        }         
+        return [];
+
+    }
     
     /**
      * 
@@ -120,6 +159,17 @@ class SaleItemDao {
         $sql = 'DELETE FROM sale_item WHERE id =:id';
         $stmt = $conn->prepare($sql);
         return $stmt->execute([':id' => $model->getId()]);
+    }
+
+    /**
+    * @param int[] $ids
+    * @return boolean
+    */			
+    public function deleteByIds( $ids ) { 
+	$conn = $this->getConnection();
+        $sql = 'DELETE FROM sale_item WHERE id IN ('.join(',', $ids).')';
+        $stmt = $conn->prepare($sql);
+        return $stmt->execute();
     }
 
     /**
