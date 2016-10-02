@@ -3,7 +3,7 @@
 namespace app\controller;
 
 use sale\model\SaleItemDao;
-use sale\dao\Query;
+use sale\dao\QuerySaleItem;
 use app\ApplyAppableInterface;
 use app\AppContextInterface;
 use app\util\View;
@@ -35,14 +35,12 @@ class SiteController implements ApplyAppableInterface {
     public function actionIndex($p = 0) { 
          
         $filterData =  isset($_GET['f']) ? $_GET['f'] : []; 
-	$q = new  Query($filterData);
+	$q = new  QuerySaleItem($filterData);
 	$q->limit = 30;
 	$q->offset = $p;
         View::renderPhp('list', [
-            'list'  => $this->dao->query2( $q ),
-            'size'  => $this->dao->size(),
-            'limit' => $q->limit,
-            'page'  => $q->offset,
+            'list'  => $this->dao->query( $q ),
+            'size'  => $this->dao->size( $q ), 
 	    'q'		=> $q,	
         ]); 
     }

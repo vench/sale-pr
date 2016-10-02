@@ -30,33 +30,14 @@ class SaleItemDao {
     }
     
 
-    public function query2(Query $q) {
-
-	$params = [];
-	$condition = '';
-
-	//TODO  ref 1
-	$conditions = [];
-
-	if(!empty($q->text)) {
-		$conditions[] = 'title like :title';
-		$params[':title'] = $q->text.'%';
-	}
-	if(!empty($q->saleSize)) {
-		$conditions[] = 'saleSize >= :saleSize';
-		$params[':saleSize'] = (int)$q->saleSize;
-	}
-
-	if(!empty($conditions)) {
-		$condition = 'WHERE '.join('AND ', $conditions).'';
-	}
-	//TODO ref 1 end
+    public function query(QuerySaleItem $q) { 
+	$condition = $q->getCondition(); 
 
  	$conn = $this->getConnection(); 
-        $sql = 'SELECT * FROM sale_item '.$condition.' ORDER BY price_diff DESC '
+        $sql = 'SELECT * FROM sale_item '.$condition->getCondition().' ORDER BY price_diff DESC '
                 . 'LIMIT '. (int)$q->offset . ',' . (int)$q->limit;   
         $stmt = $conn->prepare($sql);
-        $stmt->execute($params);
+        $stmt->execute($condition->getParams());
         $rows = $stmt->fetchAll(\PDO::FETCH_ASSOC);
         if(is_array($rows)) {
             $self = $this;
@@ -68,27 +49,7 @@ class SaleItemDao {
 
     }
     
-    /**
-     * 
-     * @param int $offset
-     * @param int $limit
-     * @return sale\model\SaleItem[]
-     */
-    public function query($offset = 0, $limit = 10) {
-        $conn = $this->getConnection(); 
-        $sql = 'SELECT * FROM sale_item ORDER BY price_diff DESC '
-                . 'LIMIT '. (int)$offset . ',' . (int)$limit; 
-        $stmt = $conn->prepare($sql);
-        $stmt->execute();
-        $rows = $stmt->fetchAll(\PDO::FETCH_ASSOC);
-        if(is_array($rows)) {
-            $self = $this;
-            return array_map(function($row) use(&$self){
-                return $self->fillModel($row);
-            }, $rows);  
-        }         
-        return [];
-    }
+     
     
     /**
      * 
@@ -175,12 +136,15 @@ class SaleItemDao {
     /**
      * @return int Description
      */
-    public function size() {
+    public function size(QuerySaleItem $q) {
+
+	$condition = $q->getCondition();
+
         $conn = $this->getConnection();
-        $sql = 'SELECT COUNT(*) AS c FROM sale_item';
+        $sql = 'SELECT COUNT(*) AS c FROM sale_item '.$condition->getCondition().'';
         $stmt = $conn->prepare($sql);
         
-        $stmt->execute();
+        $stmt->execute($condition->getParams());
         $row = $stmt->fetch(\PDO::FETCH_ASSOC);
         return isset($row['c']) ? $row['c'] : 0;
     }

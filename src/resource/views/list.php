@@ -1,7 +1,7 @@
 <?php /* @var $list \sale\model\SaleItem[] */ ?>
 <?php /* @var $size int */ ?>
-<?php /* @var $limit int */ ?>
-<?php /* @var $page int */?>
+<?php /* @var $q \sale\dao\QuerySaleItem */ ?>
+ 
 
 <?php
 self::renderPhp('header', [
@@ -16,14 +16,14 @@ self::renderPhp('header', [
         <div class="col-xs-12 col-sm-9">
           
 	<h1>Самые лучшие предложения интернета!</h1>
-          
+          <p>Всего: <?php echo $size; ?></p>
           <div class="row">
 		<?php $n = 0;?>
             <?php foreach ($list as  $item): ?>
                 <div class="col-xs-6 col-lg-4 item list"> 
                     <p><?php echo $item->getTitle(); ?> <b> скидка <?php echo $item->getPriceDiff(); ?> %</b> <small><?php echo $dateFormat($item->getDateInsert()); ?></small></p> 
 
-		    <p>Было <?php echo $priceFormat( $item->getPriceOld()); ?> 
+		    <p><small>Было <?php echo $priceFormat( $item->getPriceOld()); ?></small> 
 стало <?php echo $priceFormat($item->getPriceNew()); ?></p>
                     <p><img src="/img/emptyimage.jpg" alt="<?php echo $item->getTitle(); ?>"/></p>
                      <p><a class="" href="/?a=site/detail&id=<?php echo $item->getId(); ?>" title="<?php echo $item->getTitle(); ?>">Просмотреть детально&raquo;</a></p>
@@ -37,14 +37,15 @@ self::renderPhp('header', [
           </div><!--/row-->
           
           <p>Всего: <?php echo $size; ?></p>
-    <?php if ($limit < $size): ?>
+    <?php if ($q->limit < $size): ?>
     <ul class="pagination">
-            <?php for ($i = 0, $l = 1; $i < $size; $i+=$limit, $l++): ?>
+	   <?php $queryParam = $q->getParams(); ?>
+            <?php for ($i = 0, $l = 1; $i < $size; $i+=$q->limit, $l++): ?>
             <li>
-                <?php if ($page == $i): ?>
+                <?php if ($q->offset == $i): ?>
                     <span>[<?php echo ($l); ?>]</span>
                 <?php else: ?>
-                    <a href="/?a=site/index&p=<?php echo $i; ?>"><?php echo ($l); ?></a>
+                    <a href="/?a=site/index&p=<?php echo $i; ?>&<?php echo  $queryParam;?>"><?php echo ($l); ?></a>
             <?php endif; ?>
             </li>
     <?php endfor; ?>
