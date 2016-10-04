@@ -13,7 +13,11 @@ abstract class Provider implements IProvider {
     
     const TYPE_ELDORADO = 'eldorado.ru';
     
-    const TYPE_MVIDEO = 'mvideo.ru';
+    const TYPE_MVIDEO = 'mvideo.ru'; 
+    
+    const TYPE_OKEY = 'okeydostavka.ru';
+    
+    const TYPE_STOCK_ULMART = 'stock.ulmart.ru';
     
     /**
      *
@@ -54,6 +58,10 @@ abstract class Provider implements IProvider {
                 return new Eldorado($name);
             case self::TYPE_MVIDEO:
                 return new Mvideo($name);
+            case self::TYPE_OKEY:
+                return new Okey($name);
+            case self::TYPE_STOCK_ULMART:
+                return new StockUlmart($name);
         }
         
         return null;

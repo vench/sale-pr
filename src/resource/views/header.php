@@ -52,8 +52,7 @@
         <div id="navbar" class="collapse navbar-collapse">
           <ul class="nav navbar-nav">
             <li class="active"><a href="/">Домашняя</a></li>
-            <li><a href="#about">О проекте</a></li>
-            <li><a href="#contact">Контакты</a></li>
+            <li><a href="/?a=site/about">О проекте</a></li> 
           </ul>
         </div><!-- /.nav-collapse -->
       </div><!-- /.container -->

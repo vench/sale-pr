@@ -65,4 +65,33 @@ class Find {
 
         return $nodes;
     }
+    
+    
+    public static function find2(Node $n, $path) {
+        $nodes = [];
+        
+        foreach($n->getChilds() as $c) {
+            $npath = $c->getTagName(); 
+            if(strpos($path, '#') !== false && !empty($id = $c->getAttribute('id'))) {
+                $npath .= '#' . $id;
+            }
+            if(strpos($path, '.') !== false && !empty($klass = $c->getAttribute('class'))) {
+                $npath .= '.' . join('.', explode(' ', $klass));
+            } 
+            if(strpos($path, '>') !== false && !empty($parent = $c->getParent())) {
+                $npath = $parent->getTagName() . ' > ' . $npath;
+            }
+            
+            if(strpos($npath, $path) !== false ) {
+                $nodes[] = $c;
+            }
+            
+            $childs = self::find2($c, $path);
+            if(!empty($childs)) {
+                $nodes = array_merge($nodes, $childs);
+            }
+        }
+        
+        return $nodes;
+    }
 }

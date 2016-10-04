@@ -34,7 +34,7 @@ class SaleItemDao {
 	$condition = $q->getCondition(); 
 
  	$conn = $this->getConnection(); 
-        $sql = 'SELECT * FROM sale_item '.$condition->getCondition().' ORDER BY price_diff DESC '
+        $sql = 'SELECT * FROM sale_item '.$condition->getCondition().' ORDER BY price_diff DESC, price_new '
                 . 'LIMIT '. (int)$q->offset . ',' . (int)$q->limit;   
         $stmt = $conn->prepare($sql);
         $stmt->execute($condition->getParams());

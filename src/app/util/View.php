@@ -56,7 +56,12 @@ class View {
 	return [
 
 		'priceFormat' => function($price){ return number_format($price, 0, ',', ' ') . ' р'; },
-		'dateFormat'	=> function($dateStr){ return date('d.m.Y H:i', strtotime($dateStr)); }
+		'dateFormat'	=> function($dateStr, $format = null){ 
+                    if(is_null($format)) {
+                        $format = 'd.m.Y H:i';
+                    }
+                    return date($format, strtotime($dateStr)); 
+                }
 	];
 
    }

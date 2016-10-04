@@ -15,18 +15,18 @@ self::renderPhp('header', [
 
         <div class="col-xs-12 col-sm-9">
           
-	<h1>Самые лучшие предложения интернета!</h1>
+	<h1>Охота за самыми лучшими предложениями интернет</h1>
           <p>Всего: <?php echo $size; ?></p>
           <div class="row">
 		<?php $n = 0;?>
             <?php foreach ($list as  $item): ?>
                 <div class="col-xs-6 col-lg-4 item list"> 
-                    <p><?php echo $item->getTitle(); ?> <b> скидка <?php echo $item->getPriceDiff(); ?> %</b> <small><?php echo $dateFormat($item->getDateInsert()); ?></small></p> 
+                    <p><a class="" href="/?a=site/detail&id=<?php echo $item->getId(); ?>" title="Детально: <?php echo $item->getTitle(); ?>"><?php echo $item->getTitle(); ?></a> <b> скидка <?php echo $item->getPriceDiff(); ?> %</b> <small><?php echo $dateFormat($item->getDateInsert(), 'd.m.Y'); ?></small></p> 
 
 		    <p><small>Было <?php echo $priceFormat( $item->getPriceOld()); ?></small> 
-стало <?php echo $priceFormat($item->getPriceNew()); ?></p>
+                        стало <strong><?php echo $priceFormat($item->getPriceNew()); ?></strong></p>
                     <p><img src="/img/emptyimage.jpg" alt="<?php echo $item->getTitle(); ?>"/></p>
-                     <p><a class="" href="/?a=site/detail&id=<?php echo $item->getId(); ?>" title="<?php echo $item->getTitle(); ?>">Просмотреть детально&raquo;</a></p>
+                      
 		    <p><a class="" href="<?php echo $item->getLink();?>">На сайт <?php echo $item->getHost();?>&raquo;</a></p>
                 </div>
               
