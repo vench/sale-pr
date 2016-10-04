@@ -127,7 +127,7 @@ class Node {
         return [
             'tagName'   => $this->getTagName(),
             'parent'    => empty($this->getParent()) ? '---no---' : $this->getParent()->getTagName(),
-            'childs'    => $this->getChilds(),    
+            'childs'    => count($this->getChilds()),    
             'data'      => $this->getData(),
             'attr'      =>  join(',', array_keys( $this->attributes )),
         ];

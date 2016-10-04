@@ -67,7 +67,14 @@ class Find {
     }
     
     
-    public static function find2(Node $n, $path) {
+    /**
+     * 
+     * @param \sale\html\Node $n
+     * @param type $path
+     * @param type $debug
+     * @return \sale\html\Node[]
+     */
+    public static function find2(Node $n, $path, $debug = false, $level = 0) {
         $nodes = [];
         
         foreach($n->getChilds() as $c) {
@@ -83,12 +90,16 @@ class Find {
             }
             
             if(strpos($npath, $path) !== false ) {
+               /* if($debug) {
+                    echo $level, PHP_EOL;
+                    var_dump($npath, $n->getTagName(). '#'. $n->getAttribute('id') . '.' . $n->getAttribute('class') .':' . count($n->getChilds())); 
+                }*/
                 $nodes[] = $c;
             }
             
-            $childs = self::find2($c, $path);
-            if(!empty($childs)) {
-                $nodes = array_merge($nodes, $childs);
+            $find = self::find2($c, $path, $debug,  $level + 1 );
+            if(!empty($find)) { 
+                $nodes = array_merge($nodes, $find);
             }
         }
         

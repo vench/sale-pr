@@ -25,7 +25,8 @@ self::renderPhp('header', [
 
 		    <p><small>Было <?php echo $priceFormat( $item->getPriceOld()); ?></small> 
                         стало <strong><?php echo $priceFormat($item->getPriceNew()); ?></strong></p>
-                    <p><img src="/img/emptyimage.jpg" alt="<?php echo $item->getTitle(); ?>"/></p>
+                    <?php $url = !is_null($item->getImage()) ? $item->getImage() : '/img/emptyimage.jpg'; ?>
+                    <p><img src="<?php echo $url;?>" alt="<?php echo $item->getTitle(); ?>"/></p>
                       
 		    <p><a class="" href="<?php echo $item->getLink();?>">На сайт <?php echo $item->getHost();?>&raquo;</a></p>
                 </div>

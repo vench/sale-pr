@@ -20,13 +20,14 @@ class DOMParser {
      * 
      * @return \sale\html\Node
      */
-    public function parse() {
+    public function parse($validate = false) {
         $html = $this->html;
         $len = strlen($html);
         $root = new Node('document');
         $current = $root;
         $t = '';
         $open = false;
+         
         for($i = 0; $i < $len; $i ++) {
             $c = substr($html, $i, 1); 
             
@@ -34,14 +35,23 @@ class DOMParser {
                 $open = true;
             }  else if($open && $c == '>' && substr($t, 0, 1) == '/') {
                 $open = false;
-                $t = '';
+                
+                if($validate && strpos($t, $current->getTagName()) === false) {//@todo 
+                   $msg = "Error open|close: {$t}  <> {$current->getTagName()}, pos: {$i}";
+                   //throw new \Exception($msg);
+                   echo $msg , PHP_EOL;
+                   if(!is_null($current->getParent())){
+                       $current =  $current->getParent(); 
+                   }     
+                } 
+                $t = ''; 
                 $current =  $current->getParent();
             } else if($open && $c == '>') {
                 $open = false; 
                 
-                try {
-                    $n  = $this->createNodeBySelector($t);
-                } catch (\Exception $ex) {
+                try { 
+                    $n  = $this->createNodeBySelector($t); 
+                } catch (\Exception $ex) { 
                     $t = '';
                     continue;
                 } 
@@ -57,6 +67,9 @@ class DOMParser {
                 $current->appendData($c);
             }
         }
+        
+        
+        
         return $root;
     }
     
