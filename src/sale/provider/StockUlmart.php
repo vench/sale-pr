@@ -38,8 +38,8 @@ class StockUlmart extends Provider {
                     $model = new \sale\model\SaleItem();
                     $model->setHash($hash);
                     $model->setTitle($title[0]->getData());
-                    $model->setPriceOld(intval( $prices[0]->getData() ));
-                    $model->setPriceNew(intval( $prices[1]->getData()));
+                    $model->setPriceOld( $this->parseInt( $prices[0]->getData() ));
+                    $model->setPriceNew( $this->parseInt( $prices[1]->getData()));
                     $model->setLink( $url );
                     $model->setDateInsert(date('Y-m-d H:i'));
                     $model->setHost($this->getName());
@@ -52,4 +52,7 @@ class StockUlmart extends Provider {
         }
     }
 
+    private function parseInt($intstr) {
+        return intval(preg_replace('/[^0-9]/i', '', $intstr)  );
+    }
 }
