@@ -1,7 +1,5 @@
 <?php
 
-
-
 namespace app\util;
 
 /**
@@ -10,7 +8,7 @@ namespace app\util;
  * @author vench
  */
 class View {
-    
+
     /**
      * 
      * @return string
@@ -29,40 +27,54 @@ class View {
      * @throws \Exception
      */
     public static function renderPhp($file, $params = array(), $output = true) {
-       
-        $path = self::getPathView() .  DIRECTORY_SEPARATOR . $file;
-        if(strpos($path, '.php') === FALSE) {
+
+        $path = self::getPathView() . DIRECTORY_SEPARATOR . $file;
+        if (strpos($path, '.php') === FALSE) {
             $path .= '.php';
         }
-        if(!file_exists($path)) {
-           throw new \Exception("Not exists file view [{$file}, {$path}]");
+        if (!file_exists($path)) {
+            throw new \Exception("Not exists file view [{$file}, {$path}]");
         }
-       
+
         ob_start();
         extract($params);
-	extract(self::getHelperFunstions());
+        extract(self::getHelperFunstions());
         include_once($path);
         $s = ob_get_contents();
         ob_end_clean();
-           
-        if($output) {
+
+        if ($output) {
             echo $s;
         }
-        return $s; 
+        return $s;
     }
 
+    /**
+     * 
+     * @param string $text
+     * @return string
+     */
+    public static function encode($text) {
+        return htmlspecialchars($text, ENT_QUOTES);
+    }
 
-   public static function getHelperFunstions() {
-	return [
+    /**
+     * 
+     * @return type
+     */
+    public static function getHelperFunstions() {
+        return [
 
-		'priceFormat' => function($price){ return number_format($price, 0, ',', ' ') . ' р'; },
-		'dateFormat'	=> function($dateStr, $format = null){ 
-                    if(is_null($format)) {
-                        $format = 'd.m.Y H:i';
-                    }
-                    return date($format, strtotime($dateStr)); 
+            'priceFormat' => function($price) {
+                return number_format($price, 0, ',', ' ') . ' р';
+            },
+            'dateFormat' => function($dateStr, $format = null) {
+                if (is_null($format)) {
+                    $format = 'd.m.Y H:i';
                 }
-	];
+                return date($format, strtotime($dateStr));
+            }
+        ];
+    }
 
-   }
 }

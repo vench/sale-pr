@@ -16,17 +16,16 @@ class Okey extends Provider {
         $html = file_get_contents($url);
         if(strpos($html, 'product_price') !== false) {
             $p = new \sale\html\DOMParser($html);
-            $n = $p->parse();
-            $ns = \sale\html\Find::find($n, '.product_price');
+            $n = $p->parse(true);
+            $ns = \sale\html\Find::find2($n, 'div.product.ok-theme');
+            
+            
+        
             foreach($ns as $node) {
-                $top = $node->getParent();
-                if(!is_null($top)) { 
-                    $price = \sale\html\Find::find2($top, 'span > span.price'); 
-                    $crossed = \sale\html\Find::find2($top, 'span > span.label.small.crossed');
-                    $title = \sale\html\Find::find($top, '.product_name'); 
-                    
-                    print_r($crossed); print_r( $top); exit();
-                }    
+                 
+                 $price = \sale\html\Find::find2($node, 'span.product_price'); 
+                
+                    var_dump($price); exit();    
             }
         }
         

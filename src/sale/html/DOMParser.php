@@ -43,9 +43,11 @@ class DOMParser {
                    if(!is_null($current->getParent())){
                        $current =  $current->getParent(); 
                    }     
-                } 
+                } else {
+                    $current =  $current->getParent();
+                }
                 $t = ''; 
-                $current =  $current->getParent();
+                
             } else if($open && $c == '>') {
                 $open = false; 
                 
