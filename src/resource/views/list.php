@@ -5,7 +5,8 @@
 
 <?php
 self::renderPhp('header', [
-    'active' => 'home',
+    'active'    => 'home',
+    'title'     => 'Список самых лучших предложений онлайн-магазинов рунета',
 ]);
 ?>
 
@@ -15,7 +16,7 @@ self::renderPhp('header', [
 
         <div class="col-xs-12 col-sm-9">
           
-	<h1>Охота за самыми лучшими предложениями интернет</h1>
+	<h1>Охота за самыми лучшими предложениями интернета</h1>
           <p>Всего: <?php echo $size; ?></p>
           <div class="row">
 		<?php $n = 0;?>

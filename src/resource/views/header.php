@@ -2,7 +2,7 @@
 <?php $active = isset($active) ? $active : ''; ?>
 <?php $title = isset($title) ? $title : $siteName; ?>
 <?php $keywords = isset($keywords) ? $keywords : $title; ?>
-
+<?php $description = isset($description) ? $description : $title;  ?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -11,7 +11,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="yandex-verification" content="575bb02c5d394514" />
-    <meta name="description" content="">
+    <meta name="description" content="<?php echo $description;?>">
+    <meta name="keywords" content="<?php echo $keywords; ?>" />
     <meta name="author" content="">
     <link rel="icon" href="../../favicon.ico">
 
@@ -26,6 +27,8 @@
     <!-- Custom styles for this template -->
     <link href="/css/offcanvas.css" rel="stylesheet">
 
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>    
     <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
     <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
     <script src="/js/ie-emulation-modes-warning.js"></script>
@@ -54,6 +57,15 @@
             <li class="active"><a href="/">Домашняя</a></li>
             <li><a href="/?a=site/about">О проекте</a></li> 
           </ul>
+          
+          
+          <form action="/" class="navbar-form navbar-right">
+                <div class="form-group">
+                  <input type="text" class="form-control" placeholder="Поиск по названию" name="f[text]"/>
+                </div>
+                <button type="submit" class="btn btn-default">Найти</button>
+              </form>
+          
         </div><!-- /.nav-collapse -->
       </div><!-- /.container -->
     </nav><!-- /.navbar -->

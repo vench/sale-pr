@@ -3,6 +3,7 @@
 <?php
 self::renderPhp('header', [
     'active' => 'home',
+    'title'     => $item->getTitle() . ' Список самых лучших предложений онлайн-магазинов рунета',
 ]);
 ?>
 
