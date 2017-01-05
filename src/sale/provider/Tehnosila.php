@@ -32,6 +32,15 @@ class Tehnosila extends Provider {
 
                             preg_match('/<div class="title">\s+<a.+href="(.*)"\s+title="(.*)"/isU', $math, $title); //title
                             if (isset($title[1]) && isset($title[2])) {
+                                
+                                
+                                $image = null;
+                                //img class="lazy" data-src=
+                                if (preg_match('/<img\s+class="lazy"\s+data-src="(.*)"/isU', $math, $img) && isset($img[1])) {
+                                    $image = $img[1];
+                                }
+                                //echo ($image), PHP_EOL;
+                                
 
                                 $hash = md5($title[1]);
                                 $model = new \sale\model\SaleItem();
@@ -42,7 +51,7 @@ class Tehnosila extends Provider {
                                 $model->setLink($title[1]);
                                 $model->setDateInsert(date('Y-m-d H:i'));
                                 $model->setHost($this->getName());
-                                $model->getImage(null);
+                                $model->setImage($image);
                                 $model->setPriceDiff(   ( 1 - $model->getPriceNew() / $model->getPriceOld()) * 100  );
 
                                 yield $model;

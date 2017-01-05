@@ -25,7 +25,8 @@ class Okey extends Provider {
                  
                  $price = \sale\html\Find::find2($node, 'span.product_price'); 
                 
-                    var_dump($price); exit();    
+                 $price2 = \sale\html\Find::find2($price, 'span.price'); 
+                    var_dump($price2[0]); exit();    
             }
         }
         
