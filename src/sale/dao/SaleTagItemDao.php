@@ -4,38 +4,33 @@
 namespace sale\dao;
 
 /**
- * Description of SaleTagDao
+ * Description of SaleTagItemDao
  *
  * @author vench
  */
-class SaleTagDao {
+class SaleTagItemDao {
     
-    
-    public function getHashByMD5Title() {
-        $conn = $this->getConnection(); 
-        $sql = 'SELECT id,title FROM sale_tag ';
-        
-        $stmt = $conn->prepare($sql);
-        $stmt->execute();
-        $rows = $stmt->fetchAll(\PDO::FETCH_ASSOC);
-        
-        $hash = [];
-        foreach ($rows as $row) {
-            $key = md5($row['title']);
-            $hash[$key] = $row['id'];
+    public function addItemTag($itemId, $tagId) {
+        if(is_null($itemId) || is_null($tagId)) {
+            return null;
         }
-        return $hash;
+        
+        $model = new \sale\model\SaleTagItem();
+        $model->setItemId($itemId);
+        $model->setTagId($tagId);
+        return $this->save($model);
     }
     
-    /**
+    
+ /**
      * 
      * @param int $offset
      * @param int $limit
-     * @return \sale\model\SaleTag[]
+     * @return \sale\model\SaleTagItem[]
      */
     public function query($offset = 0, $limit = 10) {
         $conn = $this->getConnection(); 
-        $sql = 'SELECT * FROM sale_tag '
+        $sql = 'SELECT * FROM sale_tag_item '
                 . 'LIMIT '. (int)$offset . ',' . (int)$limit; 
         $stmt = $conn->prepare($sql);
         $stmt->execute();
@@ -52,11 +47,11 @@ class SaleTagDao {
     /**
      * 
      * @param int $id
-     * @return \sale\model\SaleTag
+     * @return \sale\model\SaleTagItem
      */
     public function get($id) {
         $conn = $this->getConnection();
-        $sql = 'SELECT * FROM sale_tag WHERE id =:id';
+        $sql = 'SELECT * FROM sale_tag_item WHERE id =:id';
         $stmt = $conn->prepare($sql);
         
         $stmt->execute([':id'=> $id]);
@@ -69,39 +64,39 @@ class SaleTagDao {
     
     /**
      * 
-     * @param \sale\model\SaleTag $model
+     * @param \sale\model\SaleTagItem $model
      * @return booelan
      */
-    public function save(\sale\model\SaleTag $model) {
+    public function save(\sale\model\SaleTagItem $model) {
         $conn = $this->getConnection();
         if(is_null($model->getId())) {
-            $sql = 'INSERT INTO sale_tag (`parent_id`,`title`) '
-                    . 'VALUES (:parent_id,:title)';
+            $sql = 'INSERT IGNORE INTO sale_tag_item (`tag_id`,`item_id`) '
+                    . 'VALUES (:tag_id,:item_id)';
             $stmt = $conn->prepare($sql); 
             return $stmt->execute([  
-		':parent_id' => $model->getParentId(),
-		':title' => $model->gettitle(),
+		':tag_id' => $model->getTagId(),
+		':item_id' => $model->getItemId(),
                     
                 ]);
         }  
-        $sql = 'UPDATE  sale_tag SET `parent_id`=:parent_id,`title`=:title WHERE id =:id';
+        $sql = 'UPDATE  sale_tag_item SET `tag_id`=:tag_id,`item_id`=:item_id WHERE id =:id';
         $stmt = $conn->prepare($sql);
         return $stmt->execute([ 
 		':id' => $model->getid(),
-		':parent_id' => $model->getParentId(),
-		':title' => $model->gettitle(),
+		':tag_id' => $model->gettagid(),
+		':item_id' => $model->getItemId(),
 
         ]);
     }
     
     /**
      * 
-     * @param \sale\model\SaleTag $model
+     * @param \sale\model\SaleTagItem $model
      * @return boolean
      */
-    public function delete(\sale\model\SaleTag $model) {
+    public function delete(\sale\model\SaleTagItem $model) {
         $conn = $this->getConnection();
-        $sql = 'DELETE FROM sale_tag WHERE id =:id';
+        $sql = 'DELETE FROM sale_tag_item WHERE id =:id';
         $stmt = $conn->prepare($sql);
         return $stmt->execute([':id' => $model->getId()]);
     }
@@ -111,7 +106,7 @@ class SaleTagDao {
      */
     public function size() {
         $conn = $this->getConnection();
-        $sql = 'SELECT COUNT(*) AS c FROM sale_tag';
+        $sql = 'SELECT COUNT(*) AS c FROM sale_tag_item';
         $stmt = $conn->prepare($sql);
         
         $stmt->execute();
@@ -130,10 +125,10 @@ class SaleTagDao {
     /**
      * 
      * @param array $row
-     * @return \sale\model\SaleTag
+     * @return \sale\model\SaleTagItem
      */
     private function fillModel(array $row) {
-        $model = new \sale\model\SaleTag();
+        $model = new \sale\model\SaleTagItem();
         foreach ($row as $key => $value) {
             $method = 'set' . ucfirst($key);
             if(method_exists($model, $method)) {
@@ -141,5 +136,5 @@ class SaleTagDao {
             }
         }
         return $model;
-    } 
+    }  
 }

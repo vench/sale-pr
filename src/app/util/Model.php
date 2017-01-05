@@ -138,7 +138,7 @@ class  {$table}Dao {
      * @return \PDO
      */
     public function getConnection() {
-        return Connection::getConn();
+        return \app\util\Connection::getConn();
     }
     
     /**
