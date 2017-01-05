@@ -35,12 +35,17 @@ class Mvideo extends Provider {
                     $price = \sale\html\Find::find($top, '.product-price-current');
                     $img = \sale\html\Find::find($top, '.product-tile-picture-image');
                     $title = \sale\html\Find::find($top, '.product-tile-title-link');
-
+//var_dump(); exit();
                     if(!count($title)) {
                         continue;
                     }
                     if(!count($price)) {
                         continue;
+                    }
+                    
+                    $image = null;
+                    if(isset($img[0])) {
+                        $image =  $img[0]->getAttribute('data-original');
                     }
  
                      $url = 'http://'. $this->getName() . $title[0]->getAttribute('href');
@@ -53,7 +58,7 @@ class Mvideo extends Provider {
                      $model->setLink( $url );
                      $model->setDateInsert(date('Y-m-d H:i'));
                      $model->setHost($this->getName());
-                     $model->getImage(null);
+                     $model->setImage( $image );
                      $model->setPriceDiff(   ( 1 - $model->getPriceNew() / $model->getPriceOld()) * 100  );
 
                      yield $model;

@@ -1,10 +1,16 @@
-<?php /* @var $item \sale\model\SaleItem */ ?> 
+<?php 
 
-<?php
+/* @var $item \sale\model\SaleItem */  
+
+$image = $item->getImage() ? $item->getImage() : '/img/emptyimage.jpg';
+
 self::renderPhp('header', [
     'active' => 'home',
     'title'     => $item->getTitle() . ' | Список самых лучших предложений онлайн-магазинов рунета',
 ]);
+
+
+
 ?>
 
 <div class="jumbotron">
@@ -14,7 +20,7 @@ self::renderPhp('header', [
 
 		    <p>Было <?php echo $priceFormat( $item->getPriceOld()); ?> 
 стало <?php echo $priceFormat($item->getPriceNew()); ?></p>
-                    <p><img src="/img/emptyimage.jpg" alt="<?php echo $item->getTitle(); ?>"/></p>
+                    <p><img src="<?php echo $image; ?>" alt="<?php echo $item->getTitle(); ?>"/></p>
                  
 		    <p><a class="" href="<?php echo $item->getLink();?>">На сайт <?php echo $item->getHost();?>&raquo;</a></p>
 </div>
