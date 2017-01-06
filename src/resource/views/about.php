@@ -2,7 +2,7 @@
 
 <?php
 self::renderPhp('header', [
-    'active' => 'home',
+    'active' => 'about',
 ]);
 ?>
 

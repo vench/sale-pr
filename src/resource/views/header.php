@@ -54,8 +54,9 @@
         </div>
         <div id="navbar" class="collapse navbar-collapse">
           <ul class="nav navbar-nav">
-            <li class="active"><a href="/">Домашняя</a></li>
-            <li><a href="/?a=site/about">О проекте</a></li> 
+            <li <?php if($active == '' || $active == 'home'):?>class="active"<?php endif; ?>><a href="/">Домашняя</a></li>
+            <li <?php if($active == 'tags'):?>class="active"<?php endif; ?>><a href="/?a=site/tags">Все тэги</a></li> 
+            <li <?php if($active == 'about'):?>class="active"<?php endif; ?>><a href="/?a=site/about">О проекте</a></li> 
           </ul>
           
           

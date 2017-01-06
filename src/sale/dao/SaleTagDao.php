@@ -35,7 +35,7 @@ class SaleTagDao {
      */
     public function query($offset = 0, $limit = 10) {
         $conn = $this->getConnection(); 
-        $sql = 'SELECT * FROM sale_tag '
+        $sql = 'SELECT * FROM sale_tag s ORDER BY s.order DESC '
                 . 'LIMIT '. (int)$offset . ',' . (int)$limit; 
         $stmt = $conn->prepare($sql);
         $stmt->execute();

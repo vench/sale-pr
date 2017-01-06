@@ -14,14 +14,23 @@ class QuerySaleItem {
 	public $text;
 
 	public $saleSize;
+        
+        /**
+         * Tag id
+         * @var int
+         */
+        public $tagId;
 
-	public function __construct($params = []) { 
+        public function __construct($params = []) { 
 		foreach($params as $field => $value) {
 			if($field == 'text') {
 				$this->text = $value;	
 			}
 			if($field == 'saleSize') {
 				$this->saleSize = $value;	
+			}
+                        if($field == 'tag') {
+				$this->tagId = $value;	
 			}
 		}
 	}
@@ -40,6 +49,11 @@ class QuerySaleItem {
 			$params[':saleSize'] = (int)$this->saleSize;
 		}
 
+                if(!empty($this->tagId)) {
+                        $conditions[] = 'id IN (SELECT item_id FROM sale_tag_item WHERE tag_id =:tag)';
+			$params[':tag'] = (int)$this->tagId;
+                }
+                
 		if(!empty($conditions)) {
 			$condition = 'WHERE '.join('AND ', $conditions).'';
 		}
@@ -54,6 +68,9 @@ class QuerySaleItem {
 		}
 		if(!empty($this->saleSize)) {
 			$params['saleSize'] = $this->saleSize;
+		}
+                if(!empty($this->tagId)) {
+			$params['tag'] = $this->tagId;
 		}
 
 		return   empty($params) ? '' :  http_build_query(['f' => $params] );

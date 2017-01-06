@@ -26,6 +26,12 @@ class SaleTag {
 	* @var string
 	*/
 	private $title;
+        
+        /**
+         *
+         * @var int
+         */
+        private $order;
 
 	/**
 	*
@@ -74,5 +80,22 @@ class SaleTag {
 	public function setTitle($title) {
 		$this->title = $title;
 	}
+
+        /**
+         * 
+         * @return int
+         */
+        public function getOrder() {
+            return $this->order;
+        }
+
+        /**
+         * 
+         * @param int $order
+         */
+        public function setOrder($order) {
+            $this->order = $order;
+        }
+
 
 }

@@ -23,6 +23,12 @@ class SiteController implements ApplyAppableInterface {
     
     /**
      *
+     * @var \sale\dao\SaleTagDao 
+     */
+    private $daoTag;
+    
+    /**
+     *
      * @var Request
      */
     private $request; 
@@ -38,13 +44,32 @@ class SiteController implements ApplyAppableInterface {
 	$q = new  QuerySaleItem($filterData);
 	$q->limit = 30;
 	$q->offset = $p;
+        
+        $tag = NULL;
+        if(!empty($q->tagId)) {
+            $tag = $this->daoTag->get($q->tagId);
+        }
+        
+        //var_dump($this->dao->deleteByIds([1,2,]));
+        
         View::renderPhp('list', [
             'list'  => $this->dao->query( $q ),
             'size'  => $this->dao->size( $q ), 
-	    'q'		=> $q,	
+	    'q'     => $q,	
+            'tag'   => $tag,
+            'tags'  => $this->daoTag->query(0, 30),
         ]); 
     }
 
+    /**
+     * 
+     */
+    public function actionTags() {
+        View::renderPhp('tags', [ 
+            'tags'  => $this->daoTag->query(0, 10000),
+        ]);
+    }
+    
     /**
      * 
      * @param type $id
@@ -75,6 +100,7 @@ class SiteController implements ApplyAppableInterface {
      */
     public function appInit(AppContextInterface $app) {
         $this->dao = $app->get('sale\dao\SaleItemDao');
+        $this->daoTag = $app->get('sale\dao\SaleTagDao');
         $this->request = $app->get('app\Request');
     }
 

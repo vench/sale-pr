@@ -66,7 +66,7 @@ class View {
         return [
 
             'priceFormat' => function($price) {
-                return number_format($price, 0, ',', ' ') . ' р';
+                return number_format($price, 0, ',', ' ') . ' руб';
             },
             'dateFormat' => function($dateStr, $format = null) {
                 if (is_null($format)) {

@@ -1,12 +1,18 @@
 <?php /* @var $list \sale\model\SaleItem[] */ ?>
 <?php /* @var $size int */ ?>
 <?php /* @var $q \sale\dao\QuerySaleItem */ ?>
+<?php /* @var $tag \sale\model\SaleTag */ ?> 
+<?php /* @var $tags \sale\model\SaleTag[] */ ?> 
  
 
 <?php
+
 self::renderPhp('header', [
     'active'    => 'home',
-    'title'     => 'Список самых лучших предложений онлайн-магазинов рунета',
+    'title'     => !is_null($tag) ? 
+        $tag->getTitle() . ' | Список самых лучших предложений онлайн-магазинов рунета'
+        :
+        'Список самых лучших предложений онлайн-магазинов рунета',
 ]);
 ?>
 
@@ -16,7 +22,11 @@ self::renderPhp('header', [
 
         <div class="col-xs-12 col-sm-9">
           
-	<h1>Охота за самыми лучшими предложениями интернета</h1>
+	<h1>Охота за самыми лучшими предложениями интернета
+            <?php if(!is_null($tag)):?>
+            <small>Тэг: <?php echo $tag->getTitle(); ?></small>
+            <?php endif; ?>
+        </h1>
           <p>Всего: <?php echo $size; ?></p>
           <div class="row">
 		<?php $n = 0;?>
@@ -65,7 +75,8 @@ self::renderPhp('header', [
 
         <div class="col-xs-6 col-sm-3 sidebar-offcanvas" id="sidebar">
            <?php self::renderPhp('_filter', [
-               'q'  => $q,
+               'q'      => $q,
+               'tags'   => $tags,
            ]); ?> 
         </div><!--/.sidebar-offcanvas-->
       </div><!--/row-->

@@ -1,7 +1,7 @@
  <hr>
 
       <footer>
-        <p>&copy; 2016 Company, Inc. 
+        <p>&copy; 2016 - <?php echo date('Y'); ?> Company, Inc. 
                 <a target="_blank" href="http://vench-master.spb.ru/" title="Партнер vench-master.spb.ru">Партнер по проекту</a>
         </p>
       </footer>

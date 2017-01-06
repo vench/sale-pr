@@ -36,3 +36,6 @@ CREATE TABLE `sale_tag_item` (
  DEFAULT CHARACTER SET utf8
   DEFAULT COLLATE utf8_general_ci;
 
+
+ALTER TABLE `sale_tag` ADD `order` INT NOT NULL DEFAULT '0';
+

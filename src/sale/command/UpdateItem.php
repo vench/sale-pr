@@ -29,6 +29,13 @@ class UpdateItem implements ApplyAppableInterface {
 
 
     public function update($type) {
+        
+        $pid = new Pid($type);
+        if(!$pid->open()) {
+            echo "Error pid", PHP_EOL;
+            return;
+        }
+        
         $dao = $this->dao;
         
         
@@ -57,6 +64,8 @@ class UpdateItem implements ApplyAppableInterface {
         if (!empty($old)) {
             $dao->deleteByIds($old);
         }
+        
+        $pid->close();
     }
 
     /**
@@ -91,6 +100,8 @@ class UpdateItem implements ApplyAppableInterface {
             break;
             
         }
+        
+        $tagTitle = $this->tolower($tagTitle);
         
         if(!empty($tagTitle) && !is_null($tag = $this->getTagByTitle($tagTitle))) {
            $this->daoTagItem->addItemTag($model->getId(), $tag->getId());
@@ -144,10 +155,19 @@ class UpdateItem implements ApplyAppableInterface {
      * 
      * @param string $str
      * @param int $start
-     * @param int $end
+     * @param int $length
      * @return string
      */
     private function substr($str, $start, $length = null) {
         return function_exists('mb_substr') ? mb_substr($str, $start, $length) : substr($str, $start, $length);
+    }
+    
+    /**
+     * 
+     * @param string $str
+     * @return string
+     */
+    private function tolower($str) {
+        return function_exists('mb_strtolower') ?  mb_strtolower($str) : strtolower($str);
     }
 }
