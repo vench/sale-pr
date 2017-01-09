@@ -19,6 +19,9 @@ abstract class Provider implements IProvider {
     
     const TYPE_STOCK_ULMART = 'stock.ulmart.ru';
     
+    const TYPE_YOOX = 'yoox.com';
+    
+    
     /**
      *
      * @var string 
@@ -62,8 +65,13 @@ abstract class Provider implements IProvider {
                 return new Okey($name);
             case self::TYPE_STOCK_ULMART:
                 return new StockUlmart($name);
+            case self::TYPE_YOOX:
+                return new Yoox($name);
         }
         
         return null;
     }
+    
+    
+            
 }
