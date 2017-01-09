@@ -29,9 +29,10 @@
             <h3>Тэги</h3>
            
             <?php foreach ($tags as $tag): ?>
-            <a href="/?f[tag]=<?php echo $tag->getId(); ?>"><?php echo $tag->getTitle(); ?></a> 
+            <a  class="label label-default" href="/?f[tag]=<?php echo $tag->getId(); ?>"><?php echo $tag->getTitle(); ?></a> 
             <?php endforeach;?>
-            
+            <br/>
+            <a href="/?a=site/tags"><b>Все тэги...</b></a>
            </div>  
             <?php endif; ?>
     </div>

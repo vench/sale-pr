@@ -39,7 +39,9 @@ self::renderPhp('header', [
                     <?php $url = !is_null($item->getImage()) ? $item->getImage() : '/img/emptyimage.jpg'; ?>
                     <p><img src="<?php echo $url;?>" alt="<?php echo $item->getTitle(); ?>"/></p>
                       
-		    <p><a class="" href="<?php echo $item->getLink();?>">На сайт <?php echo $item->getHost();?>&raquo;</a></p>
+                    <noindex>
+                    <p><a target="_blank" class="" href="<?php echo $item->getLink();?>">На сайт <?php echo $item->getHost();?>&raquo;</a></p>
+                    </noindex>
                 </div>
               
                <?php if(++ $n % 3 == 0):?>

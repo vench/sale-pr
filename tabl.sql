@@ -38,4 +38,5 @@ CREATE TABLE `sale_tag_item` (
 
 
 ALTER TABLE `sale_tag` ADD `order` INT NOT NULL DEFAULT '0';
+ALTER TABLE `sale_tag` ADD `is_hidden` INT NOT NULL DEFAULT '0';
 

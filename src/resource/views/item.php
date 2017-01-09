@@ -1,6 +1,8 @@
 <?php 
 
 /* @var $item \sale\model\SaleItem */  
+/* @var $tags \sale\model\SaleTags[] */  
+
 
 $image = $item->getImage() ? $item->getImage() : '/img/emptyimage.jpg';
 
@@ -22,7 +24,17 @@ self::renderPhp('header', [
 стало <?php echo $priceFormat($item->getPriceNew()); ?></p>
                     <p><img src="<?php echo $image; ?>" alt="<?php echo $item->getTitle(); ?>"/></p>
                  
-		    <p><a class="" href="<?php echo $item->getLink();?>">На сайт <?php echo $item->getHost();?>&raquo;</a></p>
+                    <noindex>
+		    <p><a class="" target="_blank" href="<?php echo $item->getLink();?>">На сайт <?php echo $item->getHost();?>&raquo;</a></p>
+                    </noindex>
+                    
+                    
+                    <?php if(!empty($tags)):?>
+                        <?php foreach ($tags as $tag): ?>
+                    <a href="/?f[tag]=<?php echo $tag->getId(); ?>" class="label label-default"><?php echo $tag->getTitle(); ?></a>
+                        
+                        <?php endforeach; ?>
+                    <?php endif; ?>
 </div>
  
 

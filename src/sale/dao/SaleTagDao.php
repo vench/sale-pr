@@ -10,7 +10,43 @@ namespace sale\dao;
  */
 class SaleTagDao {
     
+    /**
+     * 
+     * @param \sale\model\SaleItem $item
+     * @return \sale\model\SaleTag[]
+     */
+    public function getTagByItem(\sale\model\SaleItem $item) {
+        return $this->getTagByItemId($item->getId());
+    }
     
+    /**
+     * 
+     * @param int $itemId
+     * @return  \sale\model\SaleTag[]
+     */
+    public function getTagByItemId($itemId) {
+        $conn = $this->getConnection(); 
+        $sql = 'SELECT s.id, s.title FROM sale_tag s WHERE s.id IN ('
+                . 'SELECT tag_id FROM sale_tag_item WHERE item_id = :itemId)';
+        
+        $stmt = $conn->prepare($sql);
+        $stmt->execute([
+            ':itemId'   => $itemId,
+        ]);
+        $rows = $stmt->fetchAll(\PDO::FETCH_ASSOC);
+        if(is_array($rows)) {
+            $self = $this;
+            return array_map(function($row) use(&$self){
+                return $self->fillModel($row);
+            }, $rows);  
+        }         
+        return [];
+    }
+    
+    /**
+     * 
+     * @return array
+     */
     public function getHashByMD5Title() {
         $conn = $this->getConnection(); 
         $sql = 'SELECT id,title FROM sale_tag ';
@@ -35,7 +71,7 @@ class SaleTagDao {
      */
     public function query($offset = 0, $limit = 10) {
         $conn = $this->getConnection(); 
-        $sql = 'SELECT * FROM sale_tag s ORDER BY s.order DESC '
+        $sql = 'SELECT * FROM sale_tag s WHERE is_hidden = 0 ORDER BY s.order DESC '
                 . 'LIMIT '. (int)$offset . ',' . (int)$limit; 
         $stmt = $conn->prepare($sql);
         $stmt->execute();

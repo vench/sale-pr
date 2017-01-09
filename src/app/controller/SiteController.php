@@ -82,6 +82,7 @@ class SiteController implements ApplyAppableInterface {
 	}	
         View::renderPhp('item', [
             'item'  => $item,
+            'tags'  => $this->daoTag->getTagByItem($item),
         ]);
      }
      

@@ -8,6 +8,9 @@ self::renderPhp('header', [
 ]);
 ?>
 
+
+<h1>Все тэги  </h1>
+
 <?php foreach ($tags as $tag): ?>
     <a href="/?f[tag]=<?php echo $tag->getId(); ?>"><?php echo $tag->getTitle(); ?></a>
     

@@ -14,7 +14,7 @@
     <meta name="description" content="<?php echo $description;?>">
     <meta name="keywords" content="<?php echo $keywords; ?>" />
     <meta name="author" content="">
-    <link rel="icon" href="../../favicon.ico">
+    <link rel="icon" href="/img/favicon.ico">
 
     <title><?php echo $title;?></title>
 
@@ -74,6 +74,10 @@
     <div class="container">
 
      
-
+<?php
+self::renderPhp('_bread', [
+    'active' => $active,
+]);
+ 
      
 
