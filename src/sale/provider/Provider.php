@@ -21,6 +21,8 @@ abstract class Provider implements IProvider {
     
     const TYPE_YOOX = 'yoox.com';
     
+    const TYPE_5KA = '5ka.ru';
+    
     
     /**
      *
@@ -67,6 +69,8 @@ abstract class Provider implements IProvider {
                 return new StockUlmart($name);
             case self::TYPE_YOOX:
                 return new Yoox($name);
+            case self::TYPE_5KA:
+                return new Peterochka($name);
         }
         
         return null;

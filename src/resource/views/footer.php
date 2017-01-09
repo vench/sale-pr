@@ -3,6 +3,8 @@
       <footer>
         <p>&copy; 2016 - <?php echo date('Y'); ?> Company, Inc. 
                 <a target="_blank" href="http://vench-master.spb.ru/" title="Партнер vench-master.spb.ru">Партнер по проекту</a>
+                
+                | <small>Если вы являетесь правообладателем и считаете что ваши права нарушены, сообщите пожалуйста по адресу <a href="mailto:info@bcost.ru">info@bcost.ru</a></small>
         </p>
       </footer>
 

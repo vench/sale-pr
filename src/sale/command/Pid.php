@@ -16,6 +16,10 @@ class Pid {
      */
     private $name;
     
+    /**
+     *
+     * @var type 
+     */
     private $fb;
 
 
@@ -45,8 +49,10 @@ class Pid {
      * 
      */
     public function close() {
-        flock($this->fb, LOCK_UN | LOCK_NB);
-        fclose($this->fb);
+        if(is_resource($this->fb)) {
+            flock($this->fb, LOCK_UN | LOCK_NB);
+            fclose($this->fb);
+        }  
     }
     
     /**
