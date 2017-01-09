@@ -16,7 +16,7 @@
     <meta name="author" content="">
     <link rel="icon" href="/img/favicon.ico">
 
-    <title><?php echo $title;?></title>
+    <title><?php echo $title;?> | Список самых лучших предложений онлайн-магазинов рунета</title>
 
     <!-- Bootstrap core CSS -->
     <link href="/css/bootstrap.min.css" rel="stylesheet">
@@ -76,7 +76,8 @@
      
 <?php
 self::renderPhp('_bread', [
-    'active' => $active,
+    'active'    => $active,
+    'title'     => $title,
 ]);
  
      

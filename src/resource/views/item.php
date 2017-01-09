@@ -7,8 +7,8 @@
 $image = $item->getImage() ? $item->getImage() : '/img/emptyimage.jpg';
 
 self::renderPhp('header', [
-    'active' => 'home',
-    'title'     => $item->getTitle() . ' | Список самых лучших предложений онлайн-магазинов рунета',
+    'active' => 'item',
+    'title'     => $item->getTitle() ,
 ]);
 
 

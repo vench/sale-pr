@@ -9,10 +9,7 @@
 
 self::renderPhp('header', [
     'active'    => 'home',
-    'title'     => !is_null($tag) ? 
-        $tag->getTitle() . ' | Список самых лучших предложений онлайн-магазинов рунета'
-        :
-        'Список самых лучших предложений онлайн-магазинов рунета',
+    'title'     => !is_null($tag) ?  $tag->getTitle() :  '',
 ]);
 ?>
 
