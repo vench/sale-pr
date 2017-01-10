@@ -20,7 +20,17 @@ class QuerySaleItem {
          * @var int
          */
         public $tagId;
+        
+        /**
+         *
+         * @var array [0 => min, 1 => max]
+         */
+        public $price;
 
+        /**
+         * 
+         * @param array $params
+         */
         public function __construct($params = []) { 
 		foreach($params as $field => $value) {
 			if($field == 'text') {
@@ -32,10 +42,16 @@ class QuerySaleItem {
                         if($field == 'tag') {
 				$this->tagId = $value;	
 			}
+                        if($field == 'price') {
+				$this->price = is_array($value) ? $value : [$value, $value];	
+			}
 		}
 	}
 
-
+        /**
+         * 
+         * @return \sale\dao\Condition
+         */
 	public function getCondition() {
 		$params = [];
 		$condition = '';
@@ -53,14 +69,40 @@ class QuerySaleItem {
                         $conditions[] = 'id IN (SELECT item_id FROM sale_tag_item WHERE tag_id =:tag)';
 			$params[':tag'] = (int)$this->tagId;
                 }
+                if(!empty($this->price) && ($this->getPriceMax() > $this->getPriceMin())) {
+                    
+                    $conditions[] = 'price_new BETWEEN :priceMin AND :priceMax';
+		    $params[':priceMin'] = $this->getPriceMin();
+                    $params[':priceMax'] = $this->getPriceMax();
+                }
                 
 		if(!empty($conditions)) {
 			$condition = 'WHERE '.join('AND ', $conditions).'';
 		}
 		 
-		return new Condition($condition, $params);
+		return new Condition($condition, $params, 'ORDER BY price_diff DESC, price_new');
 	}
+        
+        /**
+         * 
+         * @return int
+         */
+        public function getPriceMin() {
+            return isset($this->price[0]) ? intval($this->price[0]) : 0;
+        }
 
+        /**
+         * 
+         * @return int
+         */
+        public function getPriceMax() {
+            return isset($this->price[1]) ? intval($this->price[1]) : 0;
+        }
+        
+        /**
+         * 
+         * @return string
+         */
 	public function getParams() {
 		$params = [];
 		if(!empty($this->text)) {

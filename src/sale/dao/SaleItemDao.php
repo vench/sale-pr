@@ -30,12 +30,17 @@ class SaleItemDao {
     }
     
 
+    /**
+     * 
+     * @param \sale\dao\QuerySaleItem $q
+     * @return sale\model\SaleItem[]
+     */
     public function query(QuerySaleItem $q) { 
 	$condition = $q->getCondition(); 
 
  	$conn = $this->getConnection(); 
-        $sql = 'SELECT * FROM sale_item '.$condition->getCondition().' ORDER BY price_diff DESC, price_new '
-                . 'LIMIT '. (int)$q->offset . ',' . (int)$q->limit;   
+        $sql = 'SELECT * FROM sale_item '.$condition->getCondition() . ' ' . $condition->getOrder() 
+                . ' LIMIT '. (int)$q->offset . ',' . (int)$q->limit; //var_dump( $sql ); exit();
         $stmt = $conn->prepare($sql);
         $stmt->execute($condition->getParams());
         $rows = $stmt->fetchAll(\PDO::FETCH_ASSOC);
