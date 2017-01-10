@@ -50,8 +50,12 @@ self::renderPhp('header', [
           <p>Всего: <?php echo $size; ?></p>
     <?php if ($q->limit < $size): ?>
     <ul class="pagination">
+        
 	   <?php $queryParam = $q->getParams(); ?>
-            <?php for ($i = 0, $l = 1; $i < $size; $i+=$q->limit, $l++): ?>
+           <?php $start = $q->offset  > 900 ? $q->offset  - 900 : 0  ; ?> 
+           <?php $end = $q->offset  + 900 <=  $size ? $q->offset + 900 : $size; ?> 
+        
+            <?php for ($i = $start, $l = ($start / 30 + 1); $i < $end; $i+=$q->limit, $l++): ?>
             <li>
                 <?php if ($q->offset == $i): ?>
                     <span>[<?php echo ($l); ?>]</span>

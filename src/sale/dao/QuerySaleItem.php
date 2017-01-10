@@ -7,8 +7,16 @@
 */
 class QuerySaleItem {
 
+        /**
+         *
+         * @var int
+         */
 	public $offset = 0;
 
+        /**
+         *
+         * @var int
+         */
 	public $limit = 10;
 
 	public $text;
