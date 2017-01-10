@@ -60,7 +60,7 @@ class View {
 
     /**
      * 
-     * @return type
+     * @return array
      */
     public static function getHelperFunstions() {
         return [
@@ -73,7 +73,11 @@ class View {
                     $format = 'd.m.Y H:i';
                 }
                 return date($format, strtotime($dateStr));
-            }
+            },
+                     
+            'firstChar' => function($str) {
+                return function_exists('mb_substr') ? mb_substr($str, 0, 1) : substr($str, 0, 1);
+            },
         ];
     }
 

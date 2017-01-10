@@ -65,8 +65,15 @@ class SiteController implements ApplyAppableInterface {
      * 
      */
     public function actionTags() {
+        
+        $tags = $this->daoTag->query(0, 10000);
+        
+        usort($tags, function($a, $b){
+            return $a->getTitle() <=> $b->getTitle();
+        });
+        
         View::renderPhp('tags', [ 
-            'tags'  => $this->daoTag->query(0, 10000),
+            'tags'  => $tags,
         ]);
     }
     
