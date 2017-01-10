@@ -8,6 +8,36 @@ namespace app\util;
  * @author vench
  */
 class View {
+    
+    /**
+     *
+     * @var array 
+     */
+    static private $staticContent = [];
+    
+    /**
+     * 
+     * @param string $key
+     * @param string $value html text
+     * @param boolean $reset Description
+     */
+    public static function addStaticContent($key, $value, $reset = false) {
+        if(!$reset && isset(self::$staticContent[$key])) {
+            self::$staticContent[$key] .= $value;
+        } else {
+            self::$staticContent[$key] = $value;
+        }
+    }
+    
+    /**
+     * 
+     * @param string $key
+     * @return string
+     */
+    public static function getStaticContent($key) {
+        return isset(self::$staticContent[$key]) ? self::$staticContent[$key] : '';
+    }
+    
 
     /**
      * 

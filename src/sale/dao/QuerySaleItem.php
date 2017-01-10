@@ -19,8 +19,16 @@ class QuerySaleItem {
          */
 	public $limit = 10;
 
+        /**
+         *
+         * @var string 
+         */
 	public $text;
 
+        /**
+         *
+         * @var int
+         */
 	public $saleSize;
         
         /**
@@ -85,7 +93,7 @@ class QuerySaleItem {
                 }
                 
 		if(!empty($conditions)) {
-			$condition = 'WHERE '.join('AND ', $conditions).'';
+			$condition = 'WHERE '.join(' AND ', $conditions).'';
 		}
 		 
 		return new Condition($condition, $params, 'ORDER BY price_diff DESC, price_new');

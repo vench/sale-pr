@@ -32,9 +32,13 @@ self::renderPhp('header', [
                     <p><a class="" href="/?a=site/detail&id=<?php echo $item->getId(); ?>" title="Детально: <?php echo $item->getTitle(); ?>"><?php echo $item->getTitle(); ?></a> <b> скидка <?php echo $item->getPriceDiff(); ?> %</b> <small><?php echo $dateFormat($item->getDateInsert(), 'd.m.Y'); ?></small></p> 
 
 		    <p><small>Было <?php echo $priceFormat( $item->getPriceOld()); ?></small> 
-                        стало <strong><?php echo $priceFormat($item->getPriceNew()); ?></strong></p>
+                        стало <strong class="price-new"><?php echo $priceFormat($item->getPriceNew()); ?></strong></p>
                     <?php $url = !is_null($item->getImage()) ? $item->getImage() : '/img/emptyimage.jpg'; ?>
-                    <p><img src="<?php echo $url;?>" alt="<?php echo $item->getTitle(); ?>"/></p>
+                    <p>
+                        <a class="" href="/?a=site/detail&id=<?php echo $item->getId(); ?>" title="Детально: <?php echo $item->getTitle(); ?>">
+                        <img src="<?php echo $url;?>" alt="<?php echo $item->getTitle(); ?>"/>
+                        </a>
+                        </p>
                       
                     <noindex>
                     <p><a target="_blank" class="" href="<?php echo $item->getLink();?>">На сайт <?php echo $item->getHost();?>&raquo;</a></p>
@@ -80,6 +84,8 @@ self::renderPhp('header', [
            <?php self::renderPhp('_filter', [
                'q'      => $q,
                'tags'   => $tags,
+           ]); ?> 
+            <?php self::renderPhp('_banner', [ 
            ]); ?> 
         </div><!--/.sidebar-offcanvas-->
       </div><!--/row-->

@@ -22,9 +22,9 @@
     <div  class="form-group">
         <label class="" for="f_sale_price">Цена </label>
         <div  class="form-group">     
-            <input class="col-lg-3" id="f_sale_saleSize_1" name="f[price][0]" type="text" value="<?php echo $q->getPriceMin(); ?>"/>
+            <input class="col-lg-4" id="f_sale_saleSize_1" name="f[price][0]" type="text" value="<?php echo $q->getPriceMin(); ?>"/>
             <span class="col-lg-1">-</span>
-            <input class="col-lg-3" id="f_sale_saleSize_2" name="f[price][1]" type="text" value="<?php echo $q->getPriceMax(); ?>"/>
+            <input class="col-lg-4" id="f_sale_saleSize_2" name="f[price][1]" type="text" value="<?php echo $q->getPriceMax(); ?>"/>
         </div>
         <div class="clearfix"></div>
     </div>

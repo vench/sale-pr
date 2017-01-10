@@ -1,8 +1,11 @@
 <?php $siteName = 'Самая  большая скидка';; ?>
 <?php $active = isset($active) ? $active : ''; ?>
-<?php $title = isset($title) ? $title : $siteName; ?>
+<?php $title = isset($title ) && !empty($title) ? $title : $siteName; ?>
 <?php $keywords = isset($keywords) ? $keywords : $title; ?>
 <?php $description = isset($description) ? $description : $title;  ?>
+<?php $obTitle = isset($obTitle) ? $obTitle : $title;  ?>
+<?php $obUrl = isset($obUrl) ? $obUrl : '';  ?>
+<?php $obImage = isset($obImage) ? $obImage : '';  ?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -15,7 +18,19 @@
     <meta name="keywords" content="<?php echo $keywords; ?>" />
     <meta name="author" content="">
     <link rel="icon" href="/img/favicon.ico">
-
+    
+    
+    <meta property="og:title" content="<?php echo $obTitle; ?>" />
+    <meta property="og:type" content="website" />
+    <?php if(!empty($obUrl)):?>
+    <meta property="og:url" content="<?php echo $obUrl; ?>" />
+    <?php endif; ?>
+    <?php if(!empty($obImage)):?>
+    <meta property="og:image" content="<?php echo $obImage; ?>" />
+    <?php endif; ?>
+    
+   <?php /* ?> <?php */?>
+    
     <title><?php echo $title;?> | Список самых лучших предложений онлайн-магазинов рунета</title>
 
     <!-- Bootstrap core CSS -->
@@ -38,6 +53,12 @@
       <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
+    
+    
+    <?php echo \app\util\View::getStaticContent('script-head'); ?>
+    
+    
+    
   </head>
 
   <body>

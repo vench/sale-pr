@@ -14,7 +14,7 @@ class Yoox extends Provider {
     public function getAllSaleItem() {
         $baseUrl = 'http://www.yoox.com/RU/shoponline?gender=D&page=';
         
-        for($i = 0; $i < 1000; $i ++) {
+        for($i = 0; $i < 2500; $i ++) {
             $url = $baseUrl . $i;
             echo "{$i}\n";
             
