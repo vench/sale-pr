@@ -18,4 +18,11 @@ interface IProvider {
      * @return \sale\model\SaleItem[]
      */
     public function getAllSaleItem();
+    
+    /**
+     * 
+     * @param \sale\model\SaleItem $item
+     * @return string Description
+     */
+    public function getItemDescription($item);
 }

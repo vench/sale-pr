@@ -40,3 +40,11 @@ CREATE TABLE `sale_tag_item` (
 ALTER TABLE `sale_tag` ADD `order` INT NOT NULL DEFAULT '0';
 ALTER TABLE `sale_tag` ADD `is_hidden` INT NOT NULL DEFAULT '0';
 
+CREATE TABLE `sale_item_info` (
+  `id` INT UNSIGNED auto_increment NOT NULL,
+  `item_id`  INT UNSIGNED NULL,
+  `text` text NULL,
+   FOREIGN KEY (`item_id`) REFERENCES sale_item(`id`),
+  PRIMARY KEY (`id`)) 
+ DEFAULT CHARACTER SET utf8
+  DEFAULT COLLATE utf8_general_ci;

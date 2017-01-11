@@ -62,5 +62,24 @@ class Tehnosila extends Provider {
             }
         }
     }
+    
+    /**
+     * 
+     * @param \sale\model\SaleItem $item
+     * @return string
+     */
+    public function getItemDescription($item) {
+        $html = file_get_contents($item->getLink() );        
+        
+        if(strpos($html, 'item-description') !== false) {
+            $p = new \sale\html\DOMParser($html);
+            $n = $p->parse();
+            $ns = \sale\html\Find::find($n, '.item-description'); 
+        
+            return isset($ns[0]) ? ($ns[0]->toHtml()) : '';
+        } 
+        
+        return ''; 
+    }
 
 }

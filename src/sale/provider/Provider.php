@@ -78,4 +78,13 @@ abstract class Provider implements IProvider {
     
     
             
+    /**
+     * 
+     * @param \sale\model\SaleItem $item
+     * @return string Description
+     */
+    public function getItemDescription($item) {
+        return '';
+    }        
+            
 }

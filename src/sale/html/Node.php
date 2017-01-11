@@ -118,6 +118,21 @@ class Node {
         return isset($this->attributes[$attrName]) ? $this->attributes[$attrName] : '';
     }
     
+    /**
+     * @param \Closure $processHtml Description
+     * @return string
+     */
+    public function toHtml( $processHtml = null ) {        
+        if(!empty($this->getChilds())) {
+            $string = is_callable($processHtml) ? call_user_func_array($processHtml, [$this]) : '';
+            foreach($this->getChilds() as $c) {
+                $string .= $c->toHtml( $processHtml );
+            }            
+            return $string;
+        }         
+        return is_callable($processHtml) ? call_user_func_array($processHtml, [$this]) : $this->getData();
+    }
+    
     
     /**
      * 

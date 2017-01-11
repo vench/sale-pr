@@ -57,6 +57,12 @@ class Find {
                 } 
                 $nodes = array_merge($nodes, self::find($c, $query));
             }
+            if($queryFirst == '#') { 
+                if(strpos($c->getAttribute('id'), $queryreal) !== false) {
+                    $nodes[] = $c; 
+                } 
+                $nodes = array_merge($nodes, self::find($c, $query));
+            }
         }
 
         if(!empty($pathArr)) {

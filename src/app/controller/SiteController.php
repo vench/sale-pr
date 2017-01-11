@@ -32,6 +32,12 @@ class SiteController implements ApplyAppableInterface {
      * @var Request
      */
     private $request; 
+    
+    /**
+     *
+     * @var \sale\dao\SaleItemInfoDao 
+     */
+    private $itemInfoDao;
 
 
     /**
@@ -87,10 +93,30 @@ class SiteController implements ApplyAppableInterface {
 	if(is_null($item)) {
 		return "";
 	}	
+        
+        
+        //TODO to lazy pack
+        
+        $itemInfo = $this->itemInfoDao->getByItemId($id);
+        if(is_null($itemInfo)) {
+            $itemInfo = new \sale\model\SaleItemInfo();
+            $itemInfo->setItemId($id);
+            
+            $provider = \sale\provider\Provider::getProvider( $item->getHost() );
+            $itemInfo->setText(   $provider->getItemDescription($item) );
+            
+            $this->itemInfoDao->save($itemInfo);
+        } 
+        
+        
+           
+        
+        
         View::renderPhp('item', [
             'item'  => $item,
             'tags'  => $this->daoTag->getTagByItem($item),
-        ]);
+            'description'   => $itemInfo->getText(),
+        ]); 
      }
      
      
@@ -110,6 +136,7 @@ class SiteController implements ApplyAppableInterface {
         $this->dao = $app->get('sale\dao\SaleItemDao');
         $this->daoTag = $app->get('sale\dao\SaleTagDao');
         $this->request = $app->get('app\Request');
+        $this->itemInfoDao  = $app->get('sale\dao\SaleItemInfoDao');
     }
 
 }
