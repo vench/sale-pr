@@ -93,6 +93,9 @@ class View {
      * @return array
      */
     public static function getHelperFunstions() {
+        $app = \app\App::current();
+        $config = $app->get('\app\AppConfig');
+                
         return [
 
             'priceFormat' => function($price) {
@@ -108,6 +111,10 @@ class View {
             'firstChar' => function($str) {
                 return function_exists('mb_substr') ? mb_substr($str, 0, 1) : substr($str, 0, 1);
             },
+                    
+            'isTestEnv'    => function() use(&$config){                
+                return $config->getValue('isLocal', false); 
+            },         
         ];
     }
 

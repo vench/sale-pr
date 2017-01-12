@@ -44,6 +44,7 @@ class Find {
         $pathArr = explode(' ', $path);
         $query = array_shift($pathArr); 
         $queryFirst = substr($query, 0, 1);
+        
 
         $queryreal = $query;
         if($queryFirst == '.') {
@@ -56,9 +57,20 @@ class Find {
                     $nodes[] = $c; 
                 } 
                 $nodes = array_merge($nodes, self::find($c, $query));
-            }
-            if($queryFirst == '#') { 
+            } else if($queryFirst == '#') { 
                 if(strpos($c->getAttribute('id'), $queryreal) !== false) {
+                    $nodes[] = $c; 
+                } 
+                $nodes = array_merge($nodes, self::find($c, $query));
+            } else if($queryFirst == '*') {
+                list($name, $value) = explode('=', $query);
+                //var_dump(substr($name, 1) .'=>'. $value .'=>' . $c->getAttribute( substr($name, 1) ) ); 
+                if($c->getAttribute( substr($name, 1) ) == $value ) {
+                    $nodes[] = $c; 
+                } 
+                $nodes = array_merge($nodes, self::find($c, $query));
+            } else {
+                if($c->getTagName() == $query ) {
                     $nodes[] = $c; 
                 } 
                 $nodes = array_merge($nodes, self::find($c, $query));

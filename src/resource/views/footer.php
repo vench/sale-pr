@@ -15,7 +15,7 @@
 
 
 
-
+<?php if(!$isTestEnv()):?>
 <!-- Yandex.Metrika counter -->
 <script type="text/javascript">
     (function (d, w, c) {
@@ -44,7 +44,7 @@
 </script>
 <noscript><div><img src="https://mc.yandex.ru/watch/39942220" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
 <!-- /Yandex.Metrika counter -->
-
+<?php endif; ?>
 
 
   </body>
