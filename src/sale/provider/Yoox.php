@@ -93,14 +93,18 @@ class Yoox extends Provider {
             $p = new \sale\html\DOMParser($html);
             $n = $p->parse();
             $ns = \sale\html\Find::find($n, '.item-info-content');  
-        
-            return isset($ns[0]) ? ($ns[0]->toHtml( function($n) {
+         
+            return join("\n", array_map(function($n){
+                return $n->toHtml( function($n) { 
+                    if($n->getTagName() != 'li') {
+                        return $n->getData();
+                    }
+                    return   $n->getData().'<br/>';
+                });
                 
-                if($n->getTagName() != 'li') {
-                    return $n->getData();
-                }
-                return   $n->getData().'<br/>';
-            })) : '';
+            }, array_slice($ns, 0, 2)));
+            
+             
         } 
         
         return ''; 

@@ -15,7 +15,7 @@ self::renderPhp('header', [
     'title' => $item->getTitle(),
     'obImage' => $image,
     'obUrl' => 'http://bcost.ru/?a=site/detail&id=' . $item->getId(),
-    'obTitle' => $item->getTitle() . ' за ' . $item->getTitle()
+    'obTitle' => $item->getTitle() . ' за ' . $priceFormat( $item->getPriceNew() ),
 ]);
 ?>
 
@@ -24,10 +24,12 @@ self::renderPhp('header', [
 
     <p>Скидка <b><?php echo $item->getPriceDiff(); ?> %</b> дата обнаружения <?php echo $dateFormat($item->getDateInsert()); ?>, успейте купить!</p> 
 
-    <p>Было <?php echo $priceFormat($item->getPriceOld()); ?> 
-        стало <?php echo $priceFormat($item->getPriceNew()); ?></p>
+    <p>Было <span class="price-old"><?php echo $priceFormat($item->getPriceOld()); ?> </span>
+        стало <span class="price-new"><?php echo $priceFormat($item->getPriceNew()); ?></span>
+    </p>
+    <noindex>
     <p><img src="<?php echo $image; ?>" alt="<?php echo $item->getTitle(); ?>"/></p>
-
+    </noindex>
     <noindex>
         <p><a class="" target="_blank" href="<?php echo $item->getLink(); ?>">На сайт <?php echo $item->getHost(); ?>&raquo;</a></p>
     </noindex>

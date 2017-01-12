@@ -124,7 +124,7 @@ class Node {
      */
     public function toHtml( $processHtml = null ) {        
         if(!empty($this->getChilds())) {
-            $string = is_callable($processHtml) ? call_user_func_array($processHtml, [$this]) : '';
+            $string = is_callable($processHtml) ? call_user_func_array($processHtml, [$this]) : $this->getData();
             foreach($this->getChilds() as $c) {
                 $string .= $c->toHtml( $processHtml );
             }            

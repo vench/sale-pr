@@ -49,5 +49,21 @@ class Peterochka extends Provider {
             }
         }
     }
+    
+    
+    public function getItemDescription($item) {
+        
+        $html = file_get_contents($item->getLink() );        
+        
+        if(strpos($html, 'product-item__info_item') !== false) { 
+            $p = new \sale\html\DOMParser($html);
+            $n = $p->parse();
+            $ns = \sale\html\Find::find($n, '.product-item__info_item');  
+            
+            return isset($ns[0]) ? ($ns[0]->toHtml()) : '';
+        }
+        
+        return '';
+    }
  
 }

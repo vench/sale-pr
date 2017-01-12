@@ -51,7 +51,36 @@ class StockUlmart extends Provider {
             } 
         }
     }
-
+    
+    /**
+     *  b-product-card__descr
+     * @param type $item
+     * @return string
+     */
+    public function getItemDescription($item) {
+         $html = file_get_contents($item->getLink() );        
+        
+        if(strpos($html, 'b-product-card__descr') !== false) { 
+            $p = new \sale\html\DOMParser($html);
+            $n = $p->parse();
+            $ns = \sale\html\Find::find($n, '.b-product-card__descr');  
+            
+              
+            return isset($ns[0]) ? ($ns[0]->toHtml(function($n){
+                if($n->getTagName() == 'script') {
+                        return '';
+                    }
+                return   $n->getData();
+            })) : '';
+        }
+        return '';
+    }
+    
+    /**
+     * 
+     * @param string $intstr
+     * @return int
+     */
     private function parseInt($intstr) {
         return intval(preg_replace('/[^0-9]/i', '', $intstr)  );
     }

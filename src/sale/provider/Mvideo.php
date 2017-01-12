@@ -66,5 +66,25 @@ class Mvideo extends Provider {
             }
         } 
     }
+    
+    /**
+     * 
+     * @param type $item
+     * @return string
+     */
+    public function getItemDescription($item) {
+         $html = file_get_contents($item->getLink() );        
+        
+        if(strpos($html, 'pds-top-description') !== false) { 
+            $p = new \sale\html\DOMParser($html);
+            $n = $p->parse();
+            $ns = \sale\html\Find::find($n, '.pds-top-description');  
+            
+              
+            return isset($ns[0]) ? ($ns[0]->toHtml()) : '';
+        }
+        //
+        return '';
+    }
 
 }

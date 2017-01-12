@@ -24,19 +24,24 @@ self::renderPhp('header', [
             <small>Тэг: <?php echo $tag->getTitle(); ?></small>
             <?php endif; ?>
         </h1>
-          <p>Всего: <?php echo $size; ?></p>
+          <p>Всего найдено товаров: <?php echo $size; ?></p>
+          
           <div class="row">
 		<?php $n = 0;?>
             <?php foreach ($list as  $item): ?>
                 <div class="col-xs-6 col-lg-4 item list"> 
                     <p><a class="" href="/?a=site/detail&id=<?php echo $item->getId(); ?>" title="Детально: <?php echo $item->getTitle(); ?>"><?php echo $item->getTitle(); ?></a> <b> скидка <?php echo $item->getPriceDiff(); ?> %</b> <small><?php echo $dateFormat($item->getDateInsert(), 'd.m.Y'); ?></small></p> 
 
-		    <p><small>Было <?php echo $priceFormat( $item->getPriceOld()); ?></small> 
-                        стало <strong class="price-new"><?php echo $priceFormat($item->getPriceNew()); ?></strong></p>
+		    <p><small>Было  <span class="price-old"><?php echo $priceFormat( $item->getPriceOld()); ?></span>
+                        </small> 
+                        стало <span class="price-new"><?php echo $priceFormat($item->getPriceNew()); ?> </span> 
+                    </p>
                     <?php $url = !is_null($item->getImage()) ? $item->getImage() : '/img/emptyimage.jpg'; ?>
                     <p>
                         <a class="" href="/?a=site/detail&id=<?php echo $item->getId(); ?>" title="Детально: <?php echo $item->getTitle(); ?>">
-                        <img src="<?php echo $url;?>" alt="<?php echo $item->getTitle(); ?>"/>
+                             <noindex>
+                            <img src="<?php echo $url;?>" alt="<?php echo $item->getTitle(); ?>"/>
+                             </noindex>
                         </a>
                         </p>
                       
@@ -51,8 +56,9 @@ self::renderPhp('header', [
             <?php endforeach; ?>
           </div><!--/row-->
           
-          <p>Всего: <?php echo $size; ?></p>
+          
     <?php if ($q->limit < $size): ?>
+          <p>Всего найдено товаров: <?php echo $size; ?></p>
     <ul class="pagination">
         
 	   <?php $queryParam = $q->getParams(); ?>
