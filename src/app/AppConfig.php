@@ -32,6 +32,14 @@ class AppConfig implements ApplyAppableInterface {
     public function getValue($name, $default = null) {
         return  isset($this->config[$name]) ? $this->config[$name] : $default;
     }
+    
+    /**
+     * 
+     * @return array
+     */
+    public function getControllerPaths() {
+        return array_merge( $this->getValue('controllerPaths', []), ['app\controller']);
+    }
 
     /**
      * 

@@ -41,17 +41,32 @@ class App implements AppContextInterface {
     }
 
     
-     /**
+    /**
      * 
      * @throws \Exception
-     */
+     * @todo add directory app\controller
+     */ 
     private function runRequest() { 
         $request = $this->get('app\Request');
+        $condif = $this->get('app\AppConfig');
+        
         $action = $request->getAction();
         $path = explode('/', $action);
         
+        
+        
+        
+        
         $controllerName = isset($path[0]) ? 
                 'app\controller\\' .ucfirst($path[0]).'Controller' : 'app\controller\HomeController';
+        foreach ($condif->getControllerPaths() as $pathController) {
+            $pathController = rtrim($pathController, '\\') . '\\' .ucfirst($path[0]).'Controller';
+            if(class_exists($pathController )) {
+                $controllerName = $pathController;
+                break;
+            }
+        }
+        
         $method = isset($path[1]) ? 'action'.ucfirst($path[1]) : 'actionIndex'; 
       
         $ref = $this->getReflection($controllerName); 

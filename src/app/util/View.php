@@ -78,6 +78,22 @@ class View {
         }
         return $s;
     }
+    
+    /**
+     * 
+     * @param mixed $params
+     * @param boolean $addHead
+     * @param boolean $terminate
+     */
+    public static function renderJSON($params, $addHead = true, $terminate = false) {
+        if($addHead) {
+            header('Content-type: application/json');
+        }
+        echo json_encode($params);
+        if($terminate) {
+            exit();
+        }
+    }
 
     /**
      * 

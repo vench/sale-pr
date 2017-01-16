@@ -41,6 +41,11 @@ class QuerySaleItem {
      * @var array [0 => min, 1 => max]
      */
     public $price;
+    
+    /**
+     *
+     * @var array 
+     */
     public $notItemIds = null;
 
     /**
