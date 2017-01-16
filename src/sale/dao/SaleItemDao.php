@@ -29,6 +29,23 @@ class SaleItemDao {
         return $res;
     }
     
+    
+    /**
+     * 
+     * @param int $tagId
+     * @param int $limit
+     * @param array $notItemIds
+     * @return  sale\model\SaleItem[]
+     */
+    public function getItemsByTagId($tagId, $limit = 4, $notItemIds = null) {
+        $q = new QuerySaleItem([
+            'tag'           => $tagId,
+            'limit'         => $limit,
+            'notItemIds'    => $notItemIds
+        ]);
+        
+        return $this->query($q);
+    }
 
     /**
      * 
