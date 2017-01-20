@@ -37,8 +37,10 @@ class DOMParser {
                 $open = false;
                 
                 if($validate && strpos($t, $current->getTagName()) === false) {//@todo 
-                   $msg = "Error open|close: {$t}  <> {$current->getTagName()}, pos: {$i}";
-                   //throw new \Exception($msg);
+                   $msg = "Error open|close: {$t}  <> {$current->getTagName()}, pos: {$i}, \n";
+                   $msg .= substr($html, $i, $i + 10); 
+                   $msg .= "\n";
+                   //throw new \Exception($msg);                   exit();
                    echo $msg , PHP_EOL;
                    if(!is_null($current->getParent())){
                        $current =  $current->getParent(); 
@@ -82,7 +84,7 @@ class DOMParser {
      */
     private function isSingle(\sale\html\Node $n) {
         $t = strtolower($n->getTagName());
-        return in_array($t, ['img', 'br', 'hr', 'meta', 'link']);
+        return in_array($t, ['img', 'br', 'hr', 'meta', 'link', 'input']);
     }
     
     /**

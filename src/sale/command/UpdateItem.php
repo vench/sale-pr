@@ -45,7 +45,7 @@ class UpdateItem implements ApplyAppableInterface {
         $old = $dao->getHashByType($provider->getName());
 
         foreach ($provider->getAllSaleItem() as $model) {
-            echo $model->getTitle(), PHP_EOL, $model->getLink();
+            echo $model->getTitle(), PHP_EOL, $model->getLink(), PHP_EOL,  PHP_EOL;
 
             if ($model->getPriceDiff() < 1) {
                 continue;
