@@ -25,6 +25,11 @@ class UpdateItem implements ApplyAppableInterface {
      */
     private $daoTagItem;
 
+    /**
+     *
+     * @var \sale\dao\SaleItemInfoDao 
+     */
+    private $daoItemInfoDao;
 
 
 
@@ -62,7 +67,8 @@ class UpdateItem implements ApplyAppableInterface {
         }
 
         if (!empty($old)) {
-            $dao->deleteByIds($old);
+            $this->daoItemInfoDao->deleteByItemIds($old);
+            $dao->deleteByIds($old);            
         }
         
         $pid->close();
@@ -76,6 +82,7 @@ class UpdateItem implements ApplyAppableInterface {
         $this->dao = $app->get('sale\dao\SaleItemDao');
         $this->daoTag = $app->get('sale\dao\SaleTagDao');
         $this->daoTagItem = $app->get('sale\dao\SaleTagItemDao');
+        $this->daoItemInfoDao = $app->get('sale\dao\SaleItemInfoDao');
     }
     
     /**

@@ -29,6 +29,12 @@ class DOMParser {
         $open = false;
          
         for($i = 0; $i < $len; $i ++) {
+            
+            
+            if(is_null($current)) {
+                $current = $root;
+            }
+            
             $c = substr($html, $i, 1); 
             
             if($c == '<') {

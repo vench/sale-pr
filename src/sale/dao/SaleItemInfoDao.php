@@ -128,6 +128,19 @@ class SaleItemInfoDao {
         return \app\util\Connection::getConn();
     }
     
+    
+    /**
+    * @param int[] $ids
+    * @return boolean
+    */			
+    public function deleteByItemIds( $ids ) { 
+	$conn = $this->getConnection();
+        $sql = 'DELETE FROM sale_item_info WHERE item_id IN ('.join(',', $ids).')';
+        $stmt = $conn->prepare($sql);
+        return $stmt->execute();
+    }
+    
+    
     /**
      * 
      * @param array $row
