@@ -48,3 +48,14 @@ CREATE TABLE `sale_item_info` (
   PRIMARY KEY (`id`)) 
  DEFAULT CHARACTER SET utf8
   DEFAULT COLLATE utf8_general_ci;
+
+
+CREATE TABLE `sale_item_price` (
+  `id` INT UNSIGNED auto_increment NOT NULL,
+  `item_id`  INT UNSIGNED NULL,
+  `price` INT UNSIGNED NULL,
+  `date_insert` DATETIME NULL,
+   FOREIGN KEY (`item_id`) REFERENCES sale_item(`id`),
+  PRIMARY KEY (`id`)) 
+ DEFAULT CHARACTER SET utf8
+  DEFAULT COLLATE utf8_general_ci;

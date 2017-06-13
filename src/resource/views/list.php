@@ -30,12 +30,25 @@ self::renderPhp('header', [
 		<?php $n = 0;?>
             <?php foreach ($list as  $item): ?>
                 <div class="col-xs-6 col-lg-4 item list"> 
-                    <p><a class="" href="/?a=site/detail&id=<?php echo $item->getId(); ?>" title="Детально: <?php echo $item->getTitle(); ?>"><?php echo $item->getTitle(); ?></a> <b> скидка <?php echo $item->getPriceDiff(); ?> %</b> <small><?php echo $dateFormat($item->getDateInsert(), 'd.m.Y'); ?></small></p> 
+                    <p><a class="" href="/?a=site/detail&id=<?php echo $item->getId(); ?>" title="Детально: <?php echo $item->getTitle(); ?>"><?php echo $item->getTitle(); ?></a> 
+                        
+                        <?php if( $item->getPriceDiff()) : ?>
+                        <b> скидка <?php echo $item->getPriceDiff(); ?> %</b> 
+                        <?php endif; ?>
+                        <small><?php echo $dateFormat($item->getDateInsert(), 'd.m.Y'); ?></small>
+                    </p> 
 
+                    <?php if( $item->getPriceDiff()) : ?>
 		    <p><small>Было  <span class="price-old"><?php echo $priceFormat( $item->getPriceOld()); ?></span>
                         </small> 
                         стало <span class="price-new"><?php echo $priceFormat($item->getPriceNew()); ?> </span> 
                     </p>
+                    <?php else:?>
+                    <p>
+                        цена <span class="price-new"><?php echo $priceFormat($item->getPriceNew()); ?> </span> 
+                    </p>
+                    <?php endif; ?>
+                    
                     <?php $url = !is_null($item->getImage()) ? $item->getImage() : '/img/emptyimage.jpg'; ?>
                     <p>
                         <a class="" href="/?a=site/detail&id=<?php echo $item->getId(); ?>" title="Детально: <?php echo $item->getTitle(); ?>">

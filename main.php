@@ -7,4 +7,4 @@ AutoLoad::init();
 
 //echo app\util\Model::echoTableModel('sale_item_info');
 
-echo app\util\Model::echoDao('sale_item_info', '\sale\model\SaleItemInfo');
+echo app\util\Model::echoDao('sale_item_price', '\sale\model\SaleItemPrice');

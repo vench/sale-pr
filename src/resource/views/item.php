@@ -3,6 +3,7 @@
 /* @var $tags \sale\model\SaleTags[] */
 /* @var  $description string */
 /* @var $relatedItems \sale\model\SaleItem[]  */ 
+/* @var $prices \sale\model\SaleItemPrice[] */
 
 
 
@@ -20,28 +21,77 @@ self::renderPhp('header', [
 ]);
 ?>
 
-<div class="jumbotron">
+<div class="">
     <h1><?php echo $item->getTitle(); ?></h1>
 
-    <p>Скидка <b><?php echo $item->getPriceDiff(); ?> %</b> дата обнаружения <?php echo $dateFormat($item->getDateInsert()); ?>, успейте купить!</p> 
+    <div class="row">
+        <div class="col-xs-9">
+            
+         <?php if($item->getPriceDiff() > 0): ?>
+            <p>Скидка <b><?php echo $item->getPriceDiff(); ?> %</b> дата обнаружения <?php echo $dateFormat($item->getDateInsert()); ?>, успейте купить!</p> 
 
     <p>Было <span class="price-old"><?php echo $priceFormat($item->getPriceOld()); ?> </span>
         стало <span class="price-new"><?php echo $priceFormat($item->getPriceNew()); ?></span>
     </p>
+         <?php else: ?>
+             
+    <p>
+        Цена <span class="price-new"><?php echo $priceFormat($item->getPriceNew()); ?></span>
+        Дата обнаружения <?php echo $dateFormat($item->getDateInsert()); ?>
+    </p>
+            
+         <?php endif ;?>   
+            
+             
+    
     <noindex>
         <p><img src="<?php echo $image; ?>" alt="<?php echo $item->getTitle(); ?>"/></p>
     </noindex>
-    <noindex>
+   
+         </div>
+        <div class="col-xs-3">
+            <!-- price history -->
+            <?php if(!empty($prices)):?>
+            
+            <p>
+        <small>История изменения цены</small></p> 
+            <ul class="list-unstyled">
+    <?php foreach ($prices as $price):?>
+    <li><?php echo $priceFormat($price->getPrice()); ?> -
+        <?php echo $dateFormat( $price->getDateInsert()); ?></li>
+    <?php endforeach;?>
+            </ul>
+            <?php endif; ?>
+            <!-- price history -->
+            
+          
+            
+            <!-- links -->
+
+            <div>
+                    Поделиться
+                    <div class="ya-share2" data-services="collections,vkontakte,facebook,gplus,twitter,viber,skype" data-counter=""></div>
+                </div>
+            <!-- links -->    
+            
+              
+             <noindex>
         <p><a class="" target="_blank" href="<?php echo $item->getLink(); ?>">На сайт <?php echo $item->getHost(); ?>&raquo;</a></p>
     </noindex>
+            
+         </div>
+        
+    </div>    
+   
+    
+      
 
-    <div>
-        Поделиться
-        <div class="ya-share2" data-services="collections,vkontakte,facebook,gplus,twitter,viber,skype" data-counter=""></div>
-    </div>
+    
 
     <?php if (!empty($description)): ?>
-        <div class="text-left clearfix"><br/><?php echo $description; ?></div>
+        <div class="text-left clearfix">
+            <h3>Описание</h3>
+            <?php echo $description; ?></div>
     <?php endif; ?>
 
     <?php if (!empty($tags)): ?>
@@ -60,7 +110,7 @@ self::renderPhp('header', [
 </div>
 
   <?php if(!empty($relatedItems)):?>
-<div class="sidebar-module-inset">
+<div class="">
         <h3>Похожие товары</h3>
         <div class="row " >
         <?php foreach ($relatedItems as $relatedItem): ?>

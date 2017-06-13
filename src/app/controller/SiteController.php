@@ -38,6 +38,12 @@ class SiteController implements ApplyAppableInterface {
      * @var \sale\dao\SaleItemInfoDao 
      */
     private $itemInfoDao;
+    
+    /**
+     *
+     * @var \sale\dao\SaleItemPriceDao
+     */
+    private $daoPriceItem;
 
 
     /**
@@ -118,6 +124,7 @@ class SiteController implements ApplyAppableInterface {
             'description'   => $itemInfo->getText(),
             'relatedItems'       => isset($tags[0]) ? 
                 $this->dao->getItemsByTagId( $tags[0]->getId(), 4, [$id] ) : [],
+            'prices'    => $this->daoPriceItem->getByItemId($id),
         ]); 
      }
      
@@ -139,6 +146,7 @@ class SiteController implements ApplyAppableInterface {
         $this->daoTag = $app->get('sale\dao\SaleTagDao');
         $this->request = $app->get('app\Request');
         $this->itemInfoDao  = $app->get('sale\dao\SaleItemInfoDao');
+        $this->daoPriceItem = $app->get('sale\dao\SaleItemPriceDao');
     }
 
 }

@@ -25,7 +25,11 @@ class UpdateItem implements ApplyAppableInterface {
      */
     private $daoTagItem;
 
-
+    /**
+     *
+     * @var \sale\dao\SaleItemPriceDao
+     */
+    private $daoPriceItem;
 
 
     public function update($type) {
@@ -45,25 +49,31 @@ class UpdateItem implements ApplyAppableInterface {
         $old = $dao->getHashByType($provider->getName());
 
         foreach ($provider->getAllSaleItem() as $model) {
-            echo $model->getTitle(), PHP_EOL, $model->getLink();
-
-            if ($model->getPriceDiff() < 1) {
-                continue;
-            }
+            echo $model->getTitle(), PHP_EOL, $model->getLink(); 
 
             if (isset($old[$model->getHash()])) {
-                $model->setId($old[$model->getHash()]);
+                
+                $id = $old[$model->getHash()];
+                $oldItem = $dao->get($id);
+                
+                if($oldItem->getPriceNew() != $model->getPriceNew()) {
+                    
+                    $newPrice = new \sale\model\SaleItemPrice();
+                    $newPrice->setDateInsert( $oldItem->getDateInsert() );
+                    $newPrice->setItemId($id);
+                    $newPrice->setPrice( $model->getPriceNew() );
+                    $this->daoPriceItem->save($newPrice);
+                }
+                
+                $model->setId($id);
+                
                 unset($old[$model->getHash()]);
             }
             $dao->save($model);
             $this->makeTags($model);
 
             echo PHP_EOL, PHP_EOL;
-        }
-
-        if (!empty($old)) {
-            $dao->deleteByIds($old);
-        }
+        } 
         
         $pid->close();
     }
@@ -76,6 +86,8 @@ class UpdateItem implements ApplyAppableInterface {
         $this->dao = $app->get('sale\dao\SaleItemDao');
         $this->daoTag = $app->get('sale\dao\SaleTagDao');
         $this->daoTagItem = $app->get('sale\dao\SaleTagItemDao');
+        $this->daoPriceItem = $app->get('sale\dao\SaleItemPriceDao');
+        
     }
     
     /**

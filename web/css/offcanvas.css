@@ -71,10 +71,11 @@ footer {
 }
 
 .item.list:after {
-	content:''; display:block; padding:5px 0; border-bottom:1px solid #333333;
+	content:''; display:block; padding:5px 0; 
 }
-
-
+.item.list:before {
+    content:''; display:block; border-top:1px solid #cccccc; padding:5px 0; 
+}
 
 /* */
 
