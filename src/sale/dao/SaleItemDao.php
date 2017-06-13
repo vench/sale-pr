@@ -179,7 +179,10 @@ class SaleItemDao {
         return \app\util\Connection::getConn();
     }
     
-    
+    /**
+     * 
+     * @return string
+     */
     public function error() {
         $conn = $this->getConnection();
         return $conn->errorCode();

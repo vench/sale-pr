@@ -26,10 +26,15 @@ class UpdateItem implements ApplyAppableInterface {
     private $daoTagItem;
 
     /**
-     *
+     * 
      * @var \sale\dao\SaleItemPriceDao
      */
     private $daoPriceItem;
+    
+    /**
+     * @var \sale\dao\SaleItemInfoDao 
+     */
+    private $daoItemInfoDao; 
 
 
     public function update($type) {
@@ -49,7 +54,8 @@ class UpdateItem implements ApplyAppableInterface {
         $old = $dao->getHashByType($provider->getName());
 
         foreach ($provider->getAllSaleItem() as $model) {
-            echo $model->getTitle(), PHP_EOL, $model->getLink(); 
+
+            echo $model->getTitle(), PHP_EOL, $model->getLink(), PHP_EOL,  PHP_EOL; 
 
             if (isset($old[$model->getHash()])) {
                 
@@ -73,7 +79,7 @@ class UpdateItem implements ApplyAppableInterface {
             $this->makeTags($model);
 
             echo PHP_EOL, PHP_EOL;
-        } 
+        }  
         
         $pid->close();
     }
@@ -87,7 +93,7 @@ class UpdateItem implements ApplyAppableInterface {
         $this->daoTag = $app->get('sale\dao\SaleTagDao');
         $this->daoTagItem = $app->get('sale\dao\SaleTagItemDao');
         $this->daoPriceItem = $app->get('sale\dao\SaleItemPriceDao');
-        
+        $this->daoItemInfoDao = $app->get('sale\dao\SaleItemInfoDao');
     }
     
     /**
